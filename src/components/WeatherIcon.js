@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
-import { WiRain, WiSnow, WiSleet, WiFog, WiThunderstorm, WiWindy, WiDayCloudy, WiNightCloudy, WiNightAltCloudy } from 'weather-icons-react';
+import { WiCloudy, WiHail, WiDaySunny, WiNightClear, WiRain, WiSnow, WiSleet, WiFog, WiThunderstorm, WiWindy, WiDayCloudy, WiNightAltCloudy } from 'weather-icons-react';
 import { COLOR_CHARCOAL, COLOR_WHITE } from '../Utils';
 
 const size = 140;
 
-const WeatherIcon = ({ icon, summary, day }) => {
+const WeatherIcon = ({ icon, day }) => {
 
     let wicon = null;
     let theme = null;
