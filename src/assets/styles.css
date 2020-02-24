@@ -1,0 +1,51 @@
+:root {
+    --white: #fff;
+    --charcoal: #242424;
+    --rain: #005bea;
+    --sunny: #f7b733;
+    --storm: #616161;
+    --cloud: #1f1c2c;
+    --snow: #00d2ff;
+    --drizzle: #076585;
+    --haze: #66a6ff;
+    --mist: #3cd3ad;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 67.5%;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system,
+        BlinkMacSystemFont,
+        Segoe UI,
+        Helvetica,
+        Arial,
+        sans-serif,
+        Apple Color Emoji,
+        Segoe UI Emoji;
+    font-size: 1.4rem;
+    line-height: 1.35;
+    color: var(--white);
+    background: var(--charcoal);
+    margin: 0;
+    padding: 0;
+}
+
+.root,
+.master {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+}
