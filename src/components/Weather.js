@@ -28,7 +28,7 @@ const Header = styled.div`
 const Icon = styled.div``
 const Temp = styled.div``
 const ActualTemp = styled.div`
-    font-size: 7.2rem;
+    font-size: 6.8rem;
     line-height: 1;
 `
 const FeelsTemp = styled.div`
@@ -94,8 +94,8 @@ const Weather = ({ summary, sunrise, sunset, temperature, feelsLike, windSpeed, 
                     <Point>Wind: {degToCompass(windBearing)} {windSpeed} mph</Point>
                     <Point>Humidity: {humidity * 100}{PERCENT_SYMBOL}</Point>
                     <Point>Dew Point: {Math.round(dewPoint)}{DEGREE_SYMBOL}</Point>
-                    <Point>Pressure: {Math.round(pressure * 0.0295301).toFixed(2)} inches</Point>
-                    <Point>Visibility: {visibility} miles</Point>
+                    <Point>Pressure: {Math.round(pressure * 0.0295301)} in.</Point>
+                    <Point>Visibility: {visibility} mi.</Point>
                 </Data>
                 <Location>{`${location.city}, ${location.state_code}`}</Location>
             </Body>
