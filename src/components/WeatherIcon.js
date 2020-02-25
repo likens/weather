@@ -11,7 +11,7 @@ const WeatherIcon = ({ icon, light }) => {
 
     let path = null;
     let color = null;
-    const size = 6;
+    const size = 8;
 
     if (light) {
         color = COLOR_CHARCOAL;
