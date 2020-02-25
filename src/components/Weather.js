@@ -56,9 +56,8 @@ const Icon = styled.div`
 `
 const Temp = styled.div``
 const ActualTemp = styled.div`
-    font-size: 5rem;
+    font-size: 6.4rem;
     line-height: 1;
-    text-align: center;
 `
 const FeelsTemp = styled.div`
     font-size: 1.6rem;
@@ -71,8 +70,8 @@ const Body = styled.div`
 `
 
 const Condition = styled.div`
-    font-size: calc(2.4rem + (48 - 24) * ((100vw - 30rem) / (1200 - 300)));
-    line-height: 1;
+    font-size: 4rem;
+    line-height: 1.2;
     padding-bottom: 1rem;
     font-weight: 700;
 `
