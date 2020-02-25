@@ -70,10 +70,9 @@ const Body = styled.div`
 `
 
 const Condition = styled.div`
-    font-size: 4rem;
+    font-size: 4.8rem;
     line-height: 1.2;
     padding-bottom: 1rem;
-    font-weight: 700;
 `
 
 const Data = styled.div`
