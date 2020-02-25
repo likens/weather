@@ -2,6 +2,9 @@
 export const COLOR_CHARCOAL = '#242424';
 export const COLOR_WHITE = '#fff';
 export const COLOR_SUNNY = '#f7b733';
+export const COLOR_RAIN = '#55508d';
+export const COLOR_CLOUDY = '#adc5e0';
+
 export const DEGREE_SYMBOL = '˚';
 export const PERCENT_SYMBOL = '%';
 export const COMPASS_OPTIONS = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];

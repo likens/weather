@@ -1,10 +1,11 @@
 :root {
     --white: #fff;
     --charcoal: #242424;
-    --rain: #005bea;
-    --sunny: #f7b733;
-    --storm: #616161;
-    --cloud: #1f1c2c;
+    --rain: #55508d;
+    --sunny: #fa8607;
+    --cloudy: #adc5e0;
+
+
     --snow: #00d2ff;
     --drizzle: #076585;
     --haze: #66a6ff;

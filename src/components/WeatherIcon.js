@@ -1,62 +1,78 @@
 import React, { Fragment } from 'react';
-import { WiCloudy, WiHail, WiDaySunny, WiNightClear, WiRain, WiSnow, WiSleet, WiFog, WiThunderstorm, WiWindy, WiDayCloudy, WiNightAltCloudy } from 'weather-icons-react';
-import { COLOR_CHARCOAL, COLOR_WHITE } from '../Utils';
+import { COLOR_CHARCOAL, 
+        COLOR_WHITE,
+        COLOR_SUNNY,
+        COLOR_RAIN,
+        COLOR_CLOUDY } from '../Utils';
+import Icon from '@mdi/react'
+import { mdiWeatherCloudy, mdiWeatherSnowy, mdiWeatherSnowyRainy, mdiWeatherWindy, mdiWeatherFog, mdiWeatherPartlyCloudy, mdiWeatherNightPartlyCloudy, mdiWeatherLightningRainy, mdiWeatherHail, mdiWeatherSunny, mdiWeatherNight, mdiWeatherPouring } from '@mdi/js'
 
-const size = 140;
+const WeatherIcon = ({ icon, light }) => {
 
-const WeatherIcon = ({ icon, day }) => {
+    let path = null;
+    let color = null;
+    const size = 6;
 
-    let wicon = null;
-    let theme = null;
-
-    if (day) {
-        theme = COLOR_CHARCOAL;
+    if (light) {
+        color = COLOR_CHARCOAL;
     } else {
-        theme = COLOR_WHITE;
+        color = COLOR_WHITE;
     }
 
     switch(icon) {
         case 'rain':
-            wicon = <WiRain size={size} color={theme} />
+            path = mdiWeatherPouring;
+            if (!light) {
+                color = COLOR_RAIN;
+            }
             break;
         case 'snow':
-            wicon = <WiSnow size={size} color={theme} />
+            path = mdiWeatherSnowy;
             break;
         case 'sleet':
-            wicon = <WiSleet size={size} color={theme} />
+            path = mdiWeatherSnowyRainy;
             break;
         case 'wind':
-            wicon = <WiWindy size={size} color={theme} />
+            path = mdiWeatherWindy;
             break;
         case 'fog':
-            wicon = <WiFog size={size} color={theme} />
+            path = mdiWeatherFog;
             break;
         case 'cloudy':
-            wicon = <WiCloudy size={size} color={theme} />
+            path = mdiWeatherCloudy;
+            if (!light) {
+                color = COLOR_CLOUDY;
+            }
             break;
         case 'partly-cloudy-day':
-            wicon = <WiDayCloudy size={size} color={theme} />
+            path = mdiWeatherPartlyCloudy;
             break;
         case 'partly-cloudy-night':
-            wicon = <WiNightAltCloudy size={size} color={theme} />
+            path = mdiWeatherNightPartlyCloudy;
             break;
         case 'hail':
-            wicon = <WiHail size={size} color={theme} />
+            path = mdiWeatherHail;
             break;
         case 'thunderstorm':
-            wicon = <WiThunderstorm size={size} color={theme} />
+            path = mdiWeatherLightningRainy;
+            break;
+        case 'clear-day':
+            path = mdiWeatherSunny;
+            if (!light) {
+                color = COLOR_SUNNY;
+            }
+            break;
+        case 'clear-night':
+            path = mdiWeatherNight;
             break;
         default: 
-            if (day) {
-                wicon = <WiDaySunny size={size} color={theme} />
-            } else {
-                wicon = <WiNightClear size={size} color={theme} />
-            }
             break;
     }
 
     return (
-        <Fragment>{wicon}</Fragment>
+        <Fragment>
+            <Icon path={path} color={color} size={size} />    
+        </Fragment>
     )
 }
 

@@ -3,6 +3,12 @@ import styled, { css } from 'styled-components'
 import { DEGREE_SYMBOL, PERCENT_SYMBOL, degToCompass, unixTimeToDate } from '../Utils';
 import WeatherIcon from './WeatherIcon';
 
+const clippedText = `
+    background-clip: text;
+    -webkit-background-clip:text;
+    color: transparent;
+`
+
 const Container = styled.div`
     background: var(--charcoal);
     color: var(--white);
@@ -13,9 +19,28 @@ const Container = styled.div`
     width: 100vw;
     margin: 0 auto;
     max-width: 50rem;
-    ${props => props.lightMode && css`
+    ${props => props.light && css`
         background: var(--white);
         color: var(--charcoal);
+    `}
+    ${props => !props.light && css`
+        color: var(--white);
+        ${clippedText}
+    `}
+    ${props => props.icon === 'clear-day' && css`
+        background-image: linear-gradient(to bottom, var(--sunny), #fa961b, #fbc033, #fecc51, #ffe469, #fff57b);
+    `}
+    ${props => props.icon === 'clear-night' && css`
+        background-image: linear-gradient(to bottom, var(--sunny), #fa961b, #fbc033, #fecc51, #ffe469, #fff57b);
+        ${props => !props.light && css`
+            color: var(--white);
+        `}
+    `}
+    ${props => props.icon === 'rain' && css`
+        background-image: linear-gradient(to bottom, var(--rain), #726da8, #7d8cc4, #a0d2db, #bee7e8);
+    `}
+    ${props => props.icon === 'cloudy' && css`
+        background-image: linear-gradient(to bottom, var(--cloudy), #dde5f7, #fcfeff, #e8f1ff, #8eacd3);
     `}
 `
 const Header = styled.div`
@@ -25,11 +50,15 @@ const Header = styled.div`
     align-items: center;
     width:100%;
 `
-const Icon = styled.div``
+const Icon = styled.div`
+    display: flex;
+    align-items: center;
+`
 const Temp = styled.div``
 const ActualTemp = styled.div`
-    font-size: 6.8rem;
+    font-size: 5rem;
     line-height: 1;
+    text-align: center;
 `
 const FeelsTemp = styled.div`
     font-size: 1.6rem;
@@ -42,7 +71,10 @@ const Body = styled.div`
 `
 
 const Condition = styled.div`
-    font-size: 4.8rem;
+    font-size: calc(2.4rem + (48 - 24) * ((100vw - 30rem) / (1200 - 300)));
+    line-height: 1;
+    padding-bottom: 1rem;
+    font-weight: 700;
 `
 
 const Data = styled.div`
@@ -71,15 +103,16 @@ const Updated = styled.div`
 
 const Weather = ({ summary, sunrise, sunset, temperature, feelsLike, windSpeed, windBearing, humidity, precipitation, location, time, icon, dewPoint, pressure, visibility}) => {
 
-    const day = time > sunrise && time < sunset;
+    const light = time > sunrise && time < sunset;
+    const desc = icon;
 
     return (
 
-        <Container lightMode={day}>
+        <Container light={light} icon={desc}>
 
             <Header>
                 <Icon>
-                    <WeatherIcon day={day} icon={icon} />
+                    <WeatherIcon light={light} icon={desc} />
                 </Icon>
                 <Temp>
                     <ActualTemp>{temperature}{DEGREE_SYMBOL}</ActualTemp>
