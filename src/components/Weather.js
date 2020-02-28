@@ -12,8 +12,9 @@ const clippedText = `
 const Container = styled.div`
     background: var(--charcoal);
     color: var(--white);
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-areas: "header header"
+                         "body footer";
     padding: 2rem;
     height: 100vh;
     width: 100vw;
@@ -25,25 +26,28 @@ const Container = styled.div`
     `}
     ${props => !props.light && css`
         color: var(--white);
-        ${clippedText}
     `}
     ${props => props.icon === 'clear-day' && css`
         background-image: linear-gradient(to bottom, var(--sunny), #fa961b, #fbc033, #fecc51, #ffe469, #fff57b);
-    `}
-    ${props => props.icon === 'clear-night' && css`
-        background-image: linear-gradient(to bottom, var(--sunny), #fa961b, #fbc033, #fecc51, #ffe469, #fff57b);
-        ${props => !props.light && css`
-            color: var(--white);
+        ${props => !props.light && css`  
+            ${clippedText}
         `}
     `}
     ${props => props.icon === 'rain' && css`
         background-image: linear-gradient(to bottom, var(--rain), #726da8, #7d8cc4, #a0d2db, #bee7e8);
+        ${props => !props.light && css`  
+            ${clippedText}
+        `}
     `}
     ${props => props.icon === 'cloudy' && css`
         background-image: linear-gradient(to bottom, var(--cloudy), #dde5f7, #fcfeff, #e8f1ff, #8eacd3);
+        ${props => !props.light && css`  
+            ${clippedText}
+        `}
     `}
 `
 const Header = styled.div`
+    grid-area: header;
     align-self: flex-start;
     display: flex;
     justify-content: space-between;
@@ -64,19 +68,18 @@ const FeelsTemp = styled.div`
 `
 
 const Body = styled.div`
-    align-self: flex-start;
-    text-align: center;
+    grid-area: body;
+    align-self: flex-end;
     width: 100%;
 `
 
 const Condition = styled.div`
     font-size: 4.8rem;
     line-height: 1.2;
-    padding-bottom: 1rem;
 `
 
 const Data = styled.div`
-    line-height: 1.5
+    line-height: 1.6
 `
 
 const Point = styled.div`
@@ -84,20 +87,19 @@ const Point = styled.div`
 
 const Location = styled.div`
     text-transform: capitalize;
-    padding-top:1rem;
-    font-weight: 700;
 `
 
 const Footer = styled.div`
+    grid-area: footer;
     align-self: flex-end;
     width: 100%;
-`
-
-const Updated = styled.div`
-    text-align: center;
+    text-align: right;
     font-size: 1rem;
     font-style: italic;
+    line-height: 1.5;
 `
+
+const Updated = styled.div``
 
 const Weather = ({ summary, sunrise, sunset, temperature, feelsLike, windSpeed, windBearing, humidity, precipitation, location, time, icon, dewPoint, pressure, visibility}) => {
 
@@ -128,11 +130,11 @@ const Weather = ({ summary, sunrise, sunset, temperature, feelsLike, windSpeed, 
                     <Point>Pressure: {Math.round(pressure * 0.0295301)} in.</Point>
                     <Point>Visibility: {visibility} mi.</Point>
                 </Data>
-                <Location>{`${location.city}, ${location.state_code}`}</Location>
             </Body>
 
             <Footer>
                 <Updated>Last updated @ {unixTimeToDate(time)}</Updated>
+                <Location>in {location.city}, {location.state_code}</Location>
             </Footer>
             
         </Container>
