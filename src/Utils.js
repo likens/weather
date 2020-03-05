@@ -22,9 +22,3 @@ export const unixTimeToDate = (unixTime = 0) => {
     const time = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
     return time;
 }
-
-export const averageApiValues = (values) => {
-    const sum = values.reduce((a, b) => a + b, 0);
-    const avg = (sum / values.length) || 0;
-    return Math.round(avg);
-}

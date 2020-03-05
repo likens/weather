@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
 import styled from 'styled-components';
 import { TailSpin } from 'svg-loaders-react';
-import { averageApiValues } from './Utils';
 import Weather from './components/Weather';
 
 const FORT_WAYNE_COORDS_LAT = '41.0793';
@@ -17,7 +16,6 @@ const OPEN_CAGE_DATA_API_KEY = '7899536daead4d3ca2ef479bf4df8ade';
 const resetState = {
 	isLoading: false,
 	darkSky: null,
-	openWeather: null,
 	openCageData: null,
 	luminosity: 0,
 	error: null
@@ -78,12 +76,6 @@ export default class App extends React.Component {
 			});
 		});
 
-		fetch(openWeatherUrl).then(res => res.json()).then(json => {
-			this.setState({
-				openWeather: json
-			});
-		});
-
 		fetch(openCageDataUrl).then(res => res.json()).then(json => {
 			this.setState({
 				openCageData: json
@@ -93,35 +85,25 @@ export default class App extends React.Component {
 
 	render() {
 
-		let openWeather, darkSky, openCageData = null;
+		let darkSky, openCageData = null;
 
-		if (this.state.darkSky && 
-			this.state.openWeather && 
+		if (this.state.darkSky &&
 			this.state.openCageData) {
 			darkSky = this.state.darkSky;
-			openWeather = this.state.openWeather;
 			openCageData = this.state.openCageData;
 		}
 
 		return (
 			<div className="master">
-				{ darkSky && openWeather && openCageData ? 
+				{ darkSky && openCageData ? 
 					<Fragment>
 						<Weather summary={darkSky.currently.summary}
-							sunrise={openWeather.sys.sunrise}
-							sunset={openWeather.sys.sunset}
-							temperature={averageApiValues([
-								darkSky.currently.temperature, 
-								openWeather.main.temp])}
-							feelsLike={averageApiValues([
-								darkSky.currently.apparentTemperature,
-								openWeather.main.feels_like])}
-							windSpeed={averageApiValues([
-								darkSky.currently.windSpeed,
-								openWeather.wind.speed])}
-							windBearing={averageApiValues([
-								darkSky.currently.windBearing,
-								openWeather.wind.deg])}
+							sunrise={darkSky.daily.data[0].sunriseTime}
+							sunset={darkSky.daily.data[0].sunsetTime}
+							temperature={darkSky.currently.temperature}
+							feelsLike={darkSky.currently.apparentTemperature}
+							windSpeed={darkSky.currently.windSpeed}
+							windBearing={darkSky.currently.windBearing}
 							humidity={darkSky.currently.humidity}
 							precipitation={darkSky.currently.precipProbability}
 							dewPoint={darkSky.currently.dewPoint}
