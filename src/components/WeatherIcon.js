@@ -3,26 +3,25 @@ import { COLOR_CHARCOAL,
         COLOR_WHITE,
         COLOR_SUNNY,
         COLOR_RAIN,
-        COLOR_CLOUDY } from '../Utils';
+        COLOR_CLOUDY,
+        THEME_LIGHT,
+        THEME_DARK } from '../Utils';
 import Icon from '@mdi/react'
 import { mdiWeatherCloudy, mdiWeatherSnowy, mdiWeatherSnowyRainy, mdiWeatherWindy, mdiWeatherFog, mdiWeatherPartlyCloudy, mdiWeatherNightPartlyCloudy, mdiWeatherLightningRainy, mdiWeatherHail, mdiWeatherSunny, mdiWeatherNight, mdiWeatherPouring } from '@mdi/js'
 
-const WeatherIcon = ({ icon, light }) => {
+const WeatherIcon = ({ icon, theme }) => {
 
     let path = null;
-    let color = null;
-    const size = 6;
+    let color = COLOR_WHITE;
 
-    if (light) {
+    if (theme === THEME_LIGHT) {
         color = COLOR_CHARCOAL;
-    } else {
-        color = COLOR_WHITE;
     }
 
     switch(icon) {
         case 'rain':
             path = mdiWeatherPouring;
-            if (!light) {
+            if (theme === THEME_DARK) {
                 color = COLOR_RAIN;
             }
             break;
@@ -40,7 +39,7 @@ const WeatherIcon = ({ icon, light }) => {
             break;
         case 'cloudy':
             path = mdiWeatherCloudy;
-            if (!light) {
+            if (theme === THEME_DARK) {
                 color = COLOR_CLOUDY;
             }
             break;
@@ -58,7 +57,7 @@ const WeatherIcon = ({ icon, light }) => {
             break;
         case 'clear-day':
             path = mdiWeatherSunny;
-            if (!light) {
+            if (theme === THEME_DARK) {
                 color = COLOR_SUNNY;
             }
             break;
@@ -71,7 +70,7 @@ const WeatherIcon = ({ icon, light }) => {
 
     return (
         <Fragment>
-            <Icon path={path} color={color} size={size} />    
+            <Icon path={path} color={color} size={8} />    
         </Fragment>
     )
 }
