@@ -7,7 +7,7 @@ import { THEME_LIGHT, THEME_DARK, COLOR_WHITE, translateWeatherCode } from "./Ut
 const FORT_WAYNE_COORDS_LAT = "41.0793";
 const FORT_WAYNE_COORDS_LNG = "-85.1394";
 
-const OPEN_WEATHER_URL = "http://api.openweathermap.org";
+const OPEN_WEATHER_URL = "https://api.openweathermap.org";
 const OPEN_WEATHER_WEATHER_PATH = "/data/2.5/onecall";
 const OPEN_WEATHER_GEOCODING_PATH = "/geo/1.0/reverse";
 const OPEN_WEATHER_API_KEY = "?appid=6aff0b217cdefa11d1254c77ccb78fbf";
