@@ -1,68 +1,84 @@
 import React, { Fragment } from 'react';
-import { COLOR_CHARCOAL, 
-        COLOR_WHITE,
-        COLOR_SUNNY,
-        COLOR_RAIN,
-        COLOR_CLOUDY,
-        THEME_LIGHT,
-        THEME_DARK } from '../Utils';
+import { COLOR_WHITE,
+        ICON_CLOUDS_HEAVY,
+        ICON_CLOUDS_LIGHT_DAY,
+        ICON_CLOUDS_LIGHT_NIGHT,
+        ICON_RAIN_HEAVY,
+        ICON_RAIN_LIGHT,
+        ICON_SNOW_HEAVY,
+        ICON_SNOW_LIGHT,
+        ICON_SNOW_MIXED,
+        ICON_TSTORM,
+        ICON_CLEAR_DAY, 
+        ICON_CLEAR_NIGHT,
+        ICON_HAZE,
+        ICON_WIND,
+        ICON_FOG,
+        ICON_TORNADO,
+        ICON_TEMP,
+        ICON_HUMID,
+        ICON_PRECIP } from '../Utils';
 import Icon from '@mdi/react'
-import { mdiWeatherCloudy, mdiWeatherSnowy, mdiWeatherSnowyRainy, mdiWeatherWindy, mdiWeatherFog, mdiWeatherPartlyCloudy, mdiWeatherNightPartlyCloudy, mdiWeatherLightningRainy, mdiWeatherHail, mdiWeatherSunny, mdiWeatherNight, mdiWeatherPouring } from '@mdi/js'
+import { mdiWeatherCloudy, mdiWeatherSnowy, mdiWeatherSnowyRainy, mdiWeatherWindy, mdiWeatherFog, mdiWeatherLightningRainy, mdiWeatherSunny, mdiWeatherNight, mdiWeatherPouring, mdiUmbrella, mdiThermometer, mdiWaterPercent, mdiWeatherRainy, mdiWeatherSnowyHeavy, mdiWeatherTornado, mdiWeatherHazy, mdiWeatherPartlyCloudy, mdiWeatherNightPartlyCloudy } from '@mdi/js'
 
-const WeatherIcon = ({ icon, theme }) => {
+const WeatherIcon = ({ icon, size = 2, color = COLOR_WHITE }) => {
 
     let path = null;
-    let color = COLOR_WHITE;
-
-    if (theme === THEME_LIGHT) {
-        color = COLOR_CHARCOAL;
-    }
 
     switch(icon) {
-        case 'rain':
+        case ICON_RAIN_LIGHT:
+            path = mdiWeatherRainy;
+            break;
+        case ICON_RAIN_HEAVY:
             path = mdiWeatherPouring;
-            if (theme === THEME_DARK) {
-                color = COLOR_RAIN;
-            }
             break;
-        case 'snow':
-            path = mdiWeatherSnowy;
-            break;
-        case 'sleet':
-            path = mdiWeatherSnowyRainy;
-            break;
-        case 'wind':
-            path = mdiWeatherWindy;
-            break;
-        case 'fog':
-            path = mdiWeatherFog;
-            break;
-        case 'cloudy':
+        case ICON_CLOUDS_HEAVY:
             path = mdiWeatherCloudy;
-            if (theme === THEME_DARK) {
-                color = COLOR_CLOUDY;
-            }
             break;
-        case 'partly-cloudy-day':
+        case ICON_CLOUDS_LIGHT_DAY:
             path = mdiWeatherPartlyCloudy;
             break;
-        case 'partly-cloudy-night':
+        case ICON_CLOUDS_LIGHT_NIGHT:
             path = mdiWeatherNightPartlyCloudy;
             break;
-        case 'hail':
-            path = mdiWeatherHail;
-            break;
-        case 'thunderstorm':
+        case ICON_TSTORM:
             path = mdiWeatherLightningRainy;
             break;
-        case 'clear-day':
-            path = mdiWeatherSunny;
-            if (theme === THEME_DARK) {
-                color = COLOR_SUNNY;
-            }
+        case ICON_SNOW_LIGHT:
+            path = mdiWeatherSnowy;
             break;
-        case 'clear-night':
+        case ICON_SNOW_HEAVY:
+            path = mdiWeatherSnowyHeavy;
+            break;
+        case ICON_SNOW_MIXED:
+            path = mdiWeatherSnowyRainy;
+            break;
+        case ICON_CLEAR_DAY:
+            path = mdiWeatherSunny;
+            break;
+        case ICON_CLEAR_NIGHT:
             path = mdiWeatherNight;
+            break;
+        case ICON_FOG:
+            path = mdiWeatherFog;
+            break;
+        case ICON_HAZE:
+            path = mdiWeatherHazy;
+            break;
+        case ICON_WIND:
+            path = mdiWeatherWindy;
+            break;
+        case ICON_TORNADO:
+            path = mdiWeatherTornado;
+            break;
+        case ICON_PRECIP:
+            path = mdiUmbrella;
+            break;
+        case ICON_TEMP:
+            path = mdiThermometer;
+            break;
+        case ICON_HUMID:
+            path = mdiWaterPercent;
             break;
         default: 
             break;
@@ -70,7 +86,7 @@ const WeatherIcon = ({ icon, theme }) => {
 
     return (
         <Fragment>
-            <Icon path={path} color={color} size={8} />    
+            <Icon path={path} color={color} size={size} />    
         </Fragment>
     )
 }

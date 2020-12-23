@@ -2,31 +2,51 @@ import React, {Fragment} from "react";
 import styled from "styled-components";
 import { TailSpin } from "svg-loaders-react";
 import Weather from "./components/Weather";
-import { THEME_LIGHT, THEME_DARK } from "./Utils"
+import { THEME_LIGHT, THEME_DARK, COLOR_WHITE, translateWeatherCode } from "./Utils"
 
 const FORT_WAYNE_COORDS_LAT = "41.0793";
 const FORT_WAYNE_COORDS_LNG = "-85.1394";
-const CORS_ANYWHERE_URL = "https://cors-anywhere.herokuapp.com/";
-// const OPEN_WEATHER_API_URL = "http://api.openweathermap.org/data/2.5/weather?units=imperial&APPID=";
-// const OPEN_WEATHER_API_KEY = "6aff0b217cdefa11d1254c77ccb78fbf";
-const DARK_SKY_API_URL = "https://api.darksky.net/forecast/";
-const DARK_SKY_API_KEY = "8c71429101c9409672e767129e60416c";
-const OPEN_CAGE_DATA_URL = "https://api.opencagedata.com/geocode/v1/json?q=";
-const OPEN_CAGE_DATA_API_KEY = "7899536daead4d3ca2ef479bf4df8ade";
+
+const OPEN_WEATHER_URL = "http://api.openweathermap.org";
+const OPEN_WEATHER_WEATHER_PATH = "/data/2.5/onecall";
+const OPEN_WEATHER_GEOCODING_PATH = "/geo/1.0/reverse";
+const OPEN_WEATHER_API_KEY = "?appid=6aff0b217cdefa11d1254c77ccb78fbf";
 
 const resetState = {
 	isLoading: false,
-	darkSky: null,
-	openCageData: null,
+	weather: null,
+	geo: null,
+	time: null,
 	luminosity: 0,
-	theme: null,
-	error: null
+	theme: null
 };
 
 const Refresh = styled.div`
 	position: absolute;
-	height: 100vh;
-	width: 100vw;
+	height: 100%;
+	width: 100%;
+`
+
+const Master = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	height: 100%;
+	width: 100%;
+	min-height: 100vh;
+	align-items: center;
+	justify-content: center;
+`
+
+const Loader = styled.div`
+	text-align: center;
+	margin-top: -33vh;
+`
+
+const Message = styled.div`
+	font-weight: 700;
+	font-size: 2rem;
+	padding-top: 4rem;
+	width: 100%;
 `
 
 export default class App extends React.Component {
@@ -54,32 +74,32 @@ export default class App extends React.Component {
 			...resetState
 		})
 		navigator.geolocation.getCurrentPosition(
-			position => {
-				this.fetchWeather(position.coords.latitude, position.coords.longitude);
-			},
-			error => {
-				this.fetchWeather(FORT_WAYNE_COORDS_LAT, FORT_WAYNE_COORDS_LNG);
-			}
+			position => { this.fetchWeather(position.coords.latitude, position.coords.longitude) },
+			error => { this.fetchWeather(FORT_WAYNE_COORDS_LAT, FORT_WAYNE_COORDS_LNG) }
 		);
 	}
 
 	fetchWeather(lat, lng) {
 
-		const darkSkyUrl = 
-			`${CORS_ANYWHERE_URL}${DARK_SKY_API_URL}${DARK_SKY_API_KEY}/${lat},${lng}`;
-		const openCageDataUrl = 
-			`${CORS_ANYWHERE_URL}${OPEN_CAGE_DATA_URL}${lat}+${lng}&key=${OPEN_CAGE_DATA_API_KEY}`;
+		const latLonParams =
+			`&lat=${lat}&lon=${lng}`;
 		
+		const weatherUrl = 
+			`${OPEN_WEATHER_URL}${OPEN_WEATHER_WEATHER_PATH}${OPEN_WEATHER_API_KEY}${latLonParams}&units=imperial&exclude=minutely`;
 
-		fetch(darkSkyUrl).then(res => res.json()).then(json => {
+		const geoUrl =
+			`${OPEN_WEATHER_URL}${OPEN_WEATHER_GEOCODING_PATH}${OPEN_WEATHER_API_KEY}${latLonParams}&limit=5`;
 
-			const time = json.currently.time;
-			const sunrise = json.daily.data[0].sunriseTime;
-			const sunset = json.daily.data[0].sunsetTime;
+		fetch(weatherUrl).then(res => res.json()).then(json => {
+
+			const time = json.current.dt;
+			const sunrise = json.current.sunrise;
+			const sunset = json.current.sunset;
+			const theme = time > sunrise && time < sunset ? THEME_LIGHT : THEME_DARK;
 
 			this.setState({
-				theme: time > sunrise && time < sunset ? THEME_LIGHT : THEME_DARK,
-				darkSky: {
+				theme: theme,
+				weather: {
 					raw: json,
 					times: {
 						current: time,
@@ -87,65 +107,69 @@ export default class App extends React.Component {
 						sunset: sunset
 					},
 					temps: {
-						actual: json.currently.temperature,
-						apparent: json.currently.apparentTemperature,
-						high: json.daily.data[0].temperatureHigh,
-						low: json.daily.data[0].temperatureLow
+						current: json.current.temp,
+						feels_like: json.current.feels_like,
+						high: json.daily[0].temp.max,
+						low: json.daily[0].temp.min
 					},
 					precip: {
-						humidity: json.currently.humidity,
-						probability: json.daily.data[0].precipProbability,
-						dewPoint: json.daily.data[0].dewPoint
+						humidity: json.current.humidity,
+						probability: json.daily[0].pop,
+						dew_point: json.daily[0].dew_point
 					},
 					misc: {
-						pressure: json.daily.data[0].pressure,
-						visibility: json.daily.data[0].visibility,
+						pressure: json.current.pressure,
+						visibility: json.current.visibility,
 						wind: {
-							speed: json.daily.data[0].windSpeed,
-							bearing: json.daily.data[0].windBearing
+							speed: json.current.wind_speed,
+							deg: json.current.wind_deg
 						}
 					},
 					desc: {
-						summary: json.currently.summary,
-						icon: json.currently.icon
-					}
+						code: json.current.weather[0].id,
+						tagline: json.current.weather[0].description,
+						term: translateWeatherCode(json.current.weather[0].id, theme)
+					},
+					daily: json.daily,
+					hourly: json.hourly
 				}
-			});
+			})
 		});
 
-		fetch(openCageDataUrl).then(res => res.json()).then(json => {
-			this.setState({
-				openCageData: json
-			});
-		});
+		fetch(geoUrl).then(res => res.json()).then(json => this.setState({geo: json}));
+
 	}
 
 	render() {
 
-		let darkSky, openCageData = null;
+		let weather, geo = null;
 
-		if (this.state.darkSky &&
-			this.state.openCageData) {
-			darkSky = this.state.darkSky;
-			openCageData = this.state.openCageData;
+		if (this.state.weather && this.state.geo) {
+			weather = this.state.weather;
+			geo = this.state.geo;
 		}
 
 		return (
-			<div className="master">
-				{ darkSky && openCageData ? 
+			<Master>
+				{ weather && geo ? 
 					<Fragment>
-						<Weather
-							times={this.state.darkSky.times}
-							temps={this.state.darkSky.temps}
-							precip={this.state.darkSky.precip}
-							misc={this.state.darkSky.misc}
-							desc={this.state.darkSky.desc}
+						<Weather 
 							theme={this.state.theme}
-							location={openCageData.results[0].components} />
-							<Refresh onClick={() => this.getPosition()}></Refresh>
+							times={this.state.weather.times}
+							temps={this.state.weather.temps}
+							precip={this.state.weather.precip}
+							misc={this.state.weather.misc}
+							desc={this.state.weather.desc}
+							geo={this.state.geo} 
+							daily={this.state.weather.daily}
+							hourly={this.state.weather.hourly} />
+						<Refresh onClick={() => this.getPosition()}></Refresh>
 					</Fragment> : 
-					<TailSpin width={120} height={120} stroke={"#fff"} /> }
-			</div>
+					<Loader>
+						<TailSpin width={120} height={120} stroke={COLOR_WHITE} />
+						<Message>Fetching local weather...</Message>
+					</Loader> }
+			</Master>
 		);
 	}
 }

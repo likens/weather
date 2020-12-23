@@ -1,60 +1,36 @@
 import React from "react";
-import styled, { css } from "styled-components"
-import { THEME_LIGHT, THEME_DARK } from "../Utils";
-import Header from "./Header";
-import Body from "./Body";
-import Footer from "./Footer";
-
-const clippedText = `
-    background-clip: text;
-    -webkit-background-clip:text;
-    color: transparent;
-`
+import styled from "styled-components"
+import Current from "./Current";
+import Forecast from "./Forecast";
 
 const Container = styled.div`
-    background: var(--charcoal);
-    color: var(--white);
     display: grid;
-    grid-template-areas: "header header"
-                         "body footer";
+    align-items: center;
+    justify-content: center;
+    grid-gap: 2rem;
+    grid-template-columns: 1fr;
     padding: 2rem;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     margin: 0 auto;
     max-width: 50rem;
-    ${props => props.theme === THEME_LIGHT && css`
-        background: var(--white);
-        color: var(--charcoal);
-    `}
-    ${props => props.theme === THEME_DARK && css`
-        color: var(--white);
-    `}
-    ${props => props.icon === "clear-day" && css`
-        background-image: linear-gradient(to bottom, var(--sunny), #fa961b, #fbc033, #fecc51, #ffe469, #fff57b);
-        ${props => props.theme === THEME_DARK && css`  
-            ${clippedText}
-        `}
-    `}
-    ${props => props.icon === "rain" && css`
-        background-image: linear-gradient(to bottom, var(--rain), #726da8, #7d8cc4, #a0d2db, #bee7e8);
-        ${props => props.theme === THEME_DARK && css`  
-            ${clippedText}
-        `}
-    `}
-    ${props => props.icon === "cloudy" && css`
-        background-image: linear-gradient(to bottom, var(--cloudy), #dde5f7, #fcfeff, #e8f1ff, #8eacd3);
-        ${props => props.theme === THEME_DARK && css`  
-            ${clippedText}
-        `}
-    `}
+    background-size: cover;
+    background-repeat: no-repeat;
 `
-const Weather = ({ times, temps, precip, misc, desc, location, theme }) => {
+const Weather = ({ temps, precip, misc, desc, geo, theme, daily, hourly }) => {
 
     return (
-        <Container theme={theme} icon={desc.icon}>
-            <Header theme={theme} temps={temps} icon={desc.icon} />
-            <Body desc={desc} precip={precip} misc={misc} />
-            <Footer times={times} location={location} />
+        <Container theme={theme} style={{backgroundImage: `url(/bg/${desc.term}.jpg)`}}>
+            <Current 
+                geo={geo}
+                desc={desc}
+                theme={theme} 
+                temps={temps}
+                precip={precip}
+                misc={misc} />
+            <Forecast 
+                daily={daily}
+                hourly={hourly} />
         </Container>
     )
 }
