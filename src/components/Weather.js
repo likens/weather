@@ -18,8 +18,6 @@ const Container = styled.div`
 `
 const Weather = ({ temps, precip, misc, desc, geo, theme, daily, hourly }) => {
 
-    console.log(desc);
-
     return (
         <Container theme={theme} style={{backgroundImage: `url(/bg/${desc.term}.jpg)`}}>
             <Current 

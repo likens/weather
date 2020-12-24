@@ -112,11 +112,6 @@ const Image = styled.div`
 	padding: 1rem 0;
 `;
 
-const Date = styled.div`
-	font-size: 1.2rem;
-	color: var(--grayed);
-`
-
 const Current = ({ desc, temps, geo, precip, misc }) => {
 
 	const date = new window.Date(desc.time * 1000).toLocaleString('en-us');
