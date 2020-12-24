@@ -19,7 +19,7 @@ import { COLOR_WHITE,
         ICON_HUMID,
         ICON_PRECIP } from '../Utils';
 import Icon from '@mdi/react'
-import { mdiWeatherCloudy, mdiWeatherSnowy, mdiWeatherSnowyRainy, mdiWeatherWindy, mdiWeatherFog, mdiWeatherLightningRainy, mdiWeatherSunny, mdiWeatherNight, mdiWeatherPouring, mdiUmbrella, mdiThermometer, mdiWaterPercent, mdiWeatherRainy, mdiWeatherSnowyHeavy, mdiWeatherTornado, mdiWeatherHazy, mdiWeatherPartlyCloudy, mdiWeatherNightPartlyCloudy } from '@mdi/js'
+import { mdiWeatherCloudy, mdiWeatherSnowy, mdiWeatherSnowyRainy, mdiWeatherWindy, mdiWeatherFog, mdiWeatherLightningRainy, mdiWeatherSunny, mdiWeatherNight, mdiWeatherPouring, mdiUmbrella, mdiThermometer, mdiWaterPercent, mdiWeatherSnowyHeavy, mdiWeatherTornado, mdiWeatherHazy, mdiWeatherPartlyCloudy, mdiWeatherNightPartlyCloudy } from '@mdi/js'
 
 const WeatherIcon = ({ icon, size = 2, color = COLOR_WHITE }) => {
 

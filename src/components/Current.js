@@ -63,13 +63,14 @@ const Location = styled.div`
 
 const Tagline = styled.div`
 	font-size: 2rem;
-	letter-spacing: 1px;
 	color: var(--grayed);
+	padding: 0 0 1rem;
 `
 
 const Intro = styled.div`
 	text-align:center;
 	text-transform:uppercase;
+	letter-spacing: 1px;
 	line-height: 1;
 	width: 100%;
 `
@@ -111,17 +112,24 @@ const Image = styled.div`
 	padding: 1rem 0;
 `;
 
+const Date = styled.div`
+	font-size: 1.2rem;
+	color: var(--grayed);
+`
+
 const Current = ({ desc, temps, geo, precip, misc }) => {
 
+	const date = new window.Date(desc.time * 1000).toLocaleString('en-us');
 	const name = geo[1] ? geo[1].name : geo[0].name;
 	const state = geo[1] ? geo[1].state : geo[0].state;
+	const country = geo[1] ? geo[1].country : geo[0].country;
 
     return (
 
 		<Container>
 
 			<Intro>
-				<Location>{name}{`${state ? `, ${state}` : ``}`}</Location>
+				<Location>{name}{`${state ? `, ${state}` : `${country}`}`}</Location>
 				<Tagline>{desc.tagline}</Tagline>
 			</Intro>
 
@@ -163,6 +171,9 @@ const Current = ({ desc, temps, geo, precip, misc }) => {
 					</Icon>
 					<Label>Humidity</Label>
 					<Value>{Math.round(precip.humidity)}{PERCENT_SYMBOL}</Value>
+				</Point>
+				<Point>
+					<Label>{date}</Label>
 				</Point>
 			</Data>
 

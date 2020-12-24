@@ -130,7 +130,8 @@ export default class App extends React.Component {
 					desc: {
 						code: json.current.weather[0].id,
 						tagline: json.current.weather[0].description,
-						term: translateWeatherCode(json.current.weather[0].id, theme)
+						term: translateWeatherCode(json.current.weather[0].id, theme),
+						time: json.current.dt
 					},
 					daily: json.daily,
 					hourly: json.hourly
