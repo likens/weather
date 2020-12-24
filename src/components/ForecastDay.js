@@ -63,7 +63,8 @@ const Info = styled.div`
 const Temps = styled.div`
 	display: flex;
 	align-items: center;
-	padding: 0 2rem 0 0;
+	padding: 0 0 .5rem;
+	width: 100%;
 	span {
 		font-size: 1.4rem;
 		display:inline-block;

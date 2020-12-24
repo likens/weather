@@ -13,7 +13,6 @@ const Container = styled.div`
     height: 100%;
     width: 100%;
     margin: 0 auto;
-    max-width: 50rem;
     background-size: cover;
     background-repeat: no-repeat;
 `

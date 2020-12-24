@@ -4,13 +4,15 @@ import WeatherIcon from "./WeatherIcon";
 import { DEGREE_SYMBOL, PERCENT_SYMBOL, degToCompass, ICON_TEMP, ICON_PRECIP, ICON_WIND, ICON_HUMID } from "../Utils";
 
 const Container = styled.div`
-	background: rgba(0,0,0,.3);
+	background: rgba(0,0,0,.4);
 	backdrop-filter: blur(2rem);
 	border-radius: 1rem;
 	padding: 2rem 1rem;
 	display: grid;
 	align-items: center;
 	width:100%;
+	max-width: 50rem;
+	margin: 0 auto;
 `
 const Temperatures = styled.div`
 	display: flex;
@@ -111,17 +113,20 @@ const Image = styled.div`
 
 const Current = ({ desc, temps, geo, precip, misc }) => {
 
+	const name = geo[1] ? geo[1].name : geo[0].name;
+	const state = geo[1] ? geo[1].state : geo[0].state;
+
     return (
 
 		<Container>
 
 			<Intro>
-				<Location>{geo[0].name}, {geo[0].state}</Location>
+				<Location>{name}{`${state ? `, ${state}` : ``}`}</Location>
 				<Tagline>{desc.tagline}</Tagline>
 			</Intro>
 
 			<Image>
-				<WeatherIcon icon={desc.term} size={10} />
+				<WeatherIcon icon={desc.term} size={6} />
 			</Image>
 
 			<Temperatures>

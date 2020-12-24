@@ -27,8 +27,6 @@ const WeatherIcon = ({ icon, size = 2, color = COLOR_WHITE }) => {
 
     switch(icon) {
         case ICON_RAIN_LIGHT:
-            path = mdiWeatherRainy;
-            break;
         case ICON_RAIN_HEAVY:
             path = mdiWeatherPouring;
             break;
