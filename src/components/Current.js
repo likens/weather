@@ -1,18 +1,10 @@
 import React from "react";
 import styled from "styled-components"
 import WeatherIcon from "./WeatherIcon";
-import { DEGREE_SYMBOL, PERCENT_SYMBOL, degToCompass, ICON_TEMP, ICON_PRECIP, ICON_WIND, ICON_HUMID } from "../Utils";
+import { DEGREE_SYMBOL, PERCENT_SYMBOL, degToCompass, ICON_TEMP, ICON_PRECIP, ICON_WIND, ICON_HUMID, blurBlock } from "../Utils";
 
 const Container = styled.div`
-	background: rgba(0,0,0,.4);
-	backdrop-filter: blur(2rem);
-	border-radius: 1rem;
-	padding: 2rem 1rem;
-	display: grid;
-	align-items: center;
-	width:100%;
-	max-width: 50rem;
-	margin: 0 auto;
+	${blurBlock}
 `
 const Temperatures = styled.div`
 	display: flex;
@@ -110,7 +102,7 @@ const Image = styled.div`
 	align-items: center;
 	justify-content: center;
 	padding: 1rem 0;
-`;
+`
 
 const Current = ({ desc, temps, geo, precip, misc }) => {
 

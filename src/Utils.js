@@ -111,3 +111,15 @@ export const codesAtmosphere = [701, 711, CODE_HAZE, 731, CODE_FOG, 751, 761, 76
 export const codesClear = [800];
 export const codesCloudsLight = [801, 802];
 export const codesCloudsHeavy = [803, 804];
+
+export const blurBlock = `
+	background: rgba(0, 0, 0, .4);
+	backdrop-filter: blur(1rem);
+	border-radius: 1rem;
+	padding: 2rem;
+	display: grid;
+	align-items: center;
+	width:100%;
+	max-width: 50rem;
+	margin:0 auto;
+`
