@@ -107,9 +107,12 @@ const Image = styled.div`
 const Current = ({ desc, temps, geo, precip, misc }) => {
 
 	const date = new window.Date(desc.time * 1000).toLocaleString('en-us');
-	const name = geo[1] ? geo[1].name : geo[0].name;
-	const state = geo[1] ? geo[1].state : geo[0].state;
-	const country = geo[1] ? geo[1].country : geo[0].country;
+	const name = // geo[1] ? geo[1].name : 
+		geo[0].name;
+	const state = // geo[1] ? geo[1].state : 
+		geo[0].state;
+	const country = // geo[1] ? geo[1].country : 
+		geo[0].country;
 
     return (
 

@@ -12,9 +12,11 @@ const Container = styled.div`
     padding: 2rem;
     height: 100%;
     width: 100%;
+    min-height: 100vh;
     margin: 0 auto;
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
 `
 const Weather = ({ temps, precip, misc, desc, geo, theme, daily, hourly }) => {
 
