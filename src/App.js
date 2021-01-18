@@ -27,6 +27,7 @@ const Refresh = styled.div`
 	left: 0;
 	top: 0;
 	width: 100%;
+	z-index: 3000;
 `
 
 const Master = styled.div`
@@ -131,7 +132,7 @@ export default class App extends React.Component {
 						code: json.current.weather[0].id,
 						tagline: json.current.weather[0].description,
 						term: translateWeatherCode(json.current.weather[0].id, theme),
-						time: json.current.dt
+						time: time
 					},
 					daily: json.daily,
 					hourly: json.hourly

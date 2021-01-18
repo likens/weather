@@ -3,7 +3,7 @@ import styled from "styled-components"
 import WeatherIcon from "./WeatherIcon";
 import { DEGREE_SYMBOL, PERCENT_SYMBOL, translateWeatherCode, ICON_TEMP, ICON_PRECIP } from "../Utils";
 
-const Day = styled.div`
+const Item = styled.div`
 	display: grid;
 	grid-template-columns: 4rem 4rem 10rem;
 	grid-gap: 2rem;
@@ -26,14 +26,16 @@ const Date = styled.div`
 	text-align:center;
 	letter-spacing: 1px;
 `
-const DayOfWeek = styled.div`
+const DateSub = styled.div`
 	font-size: 1.2rem;
 	color: var(--grayed);
-	padding: .5rem 0 0;
 `
-const DateOfMonth = styled.div`
+const DateMain = styled.div`
 	font-weight: 700;
 	font-size: 1.8rem;
+	span {
+		font-size: 1.2rem;
+	}
 `
 const Icon = styled.div`
 	display: flex;
@@ -83,37 +85,64 @@ const PoP = styled.div`
 	}
 `
 
-const ForecastDay = ({ day }) => {
+const ForecastItem = ({ item }) => {
 
-	const date = new window.Date(day.dt * 1000);
+	const isDay = item.temp.min && item.temp.max ? true : false;
+
+	const date = new window.Date(item.dt * 1000);
+	const month = date.getMonth() + 1;
+	const dateOfMonth = date.getDate();
+	const dateHours = date.getHours();
+
+	const temp = isDay ? item.temp : Math.round(item.temp);
+	const tempMin = Math.round(temp?.min);
+	const tempMax = Math.round(temp?.max); 
 
     return (
 		<Fragment>
-			<Day>
+			<Item>
 				<Date>
-					<DayOfWeek>{date.toLocaleString('en-us', { weekday: 'short'})}</DayOfWeek>
-					<DateOfMonth>{date.getDate()}</DateOfMonth>
+					{isDay ? 
+						<Fragment>
+							<DateMain>{month}/{dateOfMonth}</DateMain>
+							<DateSub>{date.toLocaleString('en-us', { weekday: 'short'})}</DateSub>
+						</Fragment>
+						:
+						<Fragment>
+							<DateMain>{(dateHours + 24) % 12 || 12}<span>{dateHours >= 12 ? 'PM' : 'AM'}</span></DateMain>
+							<DateSub>{month}/{dateOfMonth}</DateSub>
+						</Fragment>
+					}
 				</Date>
 
 				<Icon>
-					<WeatherIcon icon={translateWeatherCode(day.weather[0].id)} />
-					<Description>{day.weather[0].main}</Description>
+					<WeatherIcon icon={translateWeatherCode(item.weather[0].id)} />
+					<Description>{item.weather[0].main}</Description>
 				</Icon>
 
 				<Info>
 					<Temps>
 						<WeatherIcon icon={ICON_TEMP} size={1} />
-						{Math.round(day.temp.min)}{DEGREE_SYMBOL}<span>/</span>{Math.round(day.temp.max)}{DEGREE_SYMBOL}
+						{isDay ?
+							<Fragment>
+								{tempMin}{DEGREE_SYMBOL}
+								<span>/</span>
+								{tempMax}{DEGREE_SYMBOL}
+							</Fragment>
+							:
+							<Fragment>
+								{temp}{DEGREE_SYMBOL}
+							</Fragment>}
 					</Temps>
 					<PoP>
 						<WeatherIcon icon={ICON_PRECIP} size={1} />
-						{Math.round(day.pop * 100)}{PERCENT_SYMBOL}
+						{Math.round(item.pop * 100)}{PERCENT_SYMBOL}
 					</PoP>
 				</Info>
-			</Day>
+			</Item>
 
 		</Fragment>
     )
 }
 
-export default ForecastDay;
+export default ForecastItem;

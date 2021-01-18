@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components"
 import Current from "./Current";
 import Forecast from "./Forecast";
@@ -14,25 +14,40 @@ const Container = styled.div`
     width: 100%;
     min-height: 100vh;
     margin: 0 auto;
+    position: relative;
+    z-index: 2000;
+`
+const Background = styled.div`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-`
-const Weather = ({ temps, precip, misc, desc, geo, theme, daily, hourly }) => {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+`  
+
+const Weather = ({ temps, times, precip, misc, desc, geo, theme, daily, hourly }) => {
 
     return (
-        <Container theme={theme} style={{backgroundImage: `url(/bg/${desc.term}.jpg)`}}>
-            <Current 
-                geo={geo}
-                desc={desc}
-                theme={theme} 
-                temps={temps}
-                precip={precip}
-                misc={misc} />
-            <Forecast 
-                daily={daily}
-                hourly={hourly} />
-        </Container>
+        <Fragment>
+            <Container>
+                <Current 
+                    geo={geo}
+                    desc={desc}
+                    theme={theme}
+                    times={times} 
+                    temps={temps}
+                    precip={precip}
+                    misc={misc} />
+                <Forecast 
+                    daily={daily}
+                    hourly={hourly} />
+            </Container>
+            <Background theme={theme} style={{backgroundImage: `url(/bg/${desc.term}.jpg)`}} />
+        </Fragment>
     )
 }
 

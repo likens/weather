@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components"
 import WeatherIcon from "./WeatherIcon";
-import { DEGREE_SYMBOL, PERCENT_SYMBOL, degToCompass, ICON_TEMP, ICON_PRECIP, ICON_WIND, ICON_HUMID, blurBlock } from "../Utils";
+import { DEGREE_SYMBOL, PERCENT_SYMBOL, degToCompass, ICON_TEMP, ICON_PRECIP, ICON_WIND, ICON_HUMID, ICON_SUNSET, blurBlock, THEME_DARK } from "../Utils";
 
 const Container = styled.div`
 	${blurBlock}
@@ -104,9 +104,12 @@ const Image = styled.div`
 	padding: 1rem 0;
 `
 
-const Current = ({ desc, temps, geo, precip, misc }) => {
+const Current = ({ desc, temps, geo, precip, misc, theme, times }) => {
 
 	const date = new window.Date(desc.time * 1000).toLocaleString('en-us');
+	const sunset = new window.Date((theme === THEME_DARK ? times.sunrise : times.sunset) * 1000).toLocaleTimeString('en-us');
+
+
 	const name = // geo[1] ? geo[1].name : 
 		geo[0].name;
 	const state = // geo[1] ? geo[1].state : 
@@ -161,6 +164,13 @@ const Current = ({ desc, temps, geo, precip, misc }) => {
 					</Icon>
 					<Label>Humidity</Label>
 					<Value>{Math.round(precip.humidity)}{PERCENT_SYMBOL}</Value>
+				</Point>
+				<Point>
+					<Icon>
+						<WeatherIcon icon={ICON_SUNSET} size={1} />
+					</Icon>
+					<Label>{theme === THEME_DARK ? `Sunrise` : `Sunset`}</Label>
+					<Value>{sunset}</Value>
 				</Point>
 				<Point>
 					<Label>{date}</Label>

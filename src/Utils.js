@@ -12,24 +12,31 @@ export const COMPASS_OPTIONS = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE"
 export const THEME_LIGHT = "light";
 export const THEME_DARK = "dark";
 
-export const ICON_RAIN_LIGHT = "rainLight";
-export const ICON_RAIN_HEAVY = "rainHeavy";
-export const ICON_SNOW_LIGHT = "snowLight";
-export const ICON_SNOW_HEAVY = "snowHeavy";
+export const ICON_RAIN_LIGHT_DAY = "rainLight-day";
+export const ICON_RAIN_LIGHT_NIGHT = "rainLight-night";
+export const ICON_RAIN_HEAVY_DAY = "rainHeavy-day";
+export const ICON_RAIN_HEAVY_NIGHT = "rainHeavy-night";
+export const ICON_SNOW_LIGHT_DAY = "snowLight-day";
+export const ICON_SNOW_LIGHT_NIGHT = "snowLight-night";
+export const ICON_SNOW_HEAVY_DAY = "snowHeavy-day";
+export const ICON_SNOW_HEAVY_NIGHT = "snowHeavy-night";
 export const ICON_SNOW_MIXED = "snowMixed";
 export const ICON_TSTORM = "tStorm";
-export const ICON_CLOUDS_LIGHT_DAY = "cloudsLightDay";
-export const ICON_CLOUDS_LIGHT_NIGHT = "cloudsLightNight";
-export const ICON_CLOUDS_HEAVY = "cloudsHeavy";
-export const ICON_CLEAR_DAY = "clearDay";
-export const ICON_CLEAR_NIGHT = "clearNight";
-export const ICON_FOG = "fog";
+export const ICON_CLOUDS_LIGHT_DAY = "cloudsLight-day";
+export const ICON_CLOUDS_LIGHT_NIGHT = "cloudsLight-night";
+export const ICON_CLOUDS_HEAVY_DAY = "cloudsHeavy-day";
+export const ICON_CLOUDS_HEAVY_NIGHT = "cloudsHeavy-night";
+export const ICON_CLEAR_DAY = "clear-day";
+export const ICON_CLEAR_NIGHT = "clear-night";
+export const ICON_FOG_DAY = "fog-day";
+export const ICON_FOG_NIGHT = "fog-night";
 export const ICON_HAZE = "haze";
 export const ICON_TORNADO = "tornado";
 export const ICON_WIND = "wind";
 export const ICON_TEMP = "temp";
 export const ICON_PRECIP = "precip";
 export const ICON_HUMID = "humid";
+export const ICON_SUNSET = "sunset";
 
 export const CODE_HAZE = 721;
 export const CODE_FOG = 741;
@@ -53,31 +60,23 @@ export const unixTimeToDate = (unixTime = 0) => {
 export const translateWeatherCode = (code = 800, theme = THEME_LIGHT) => {
     switch (code) {
         case checkCodeList(code, codesRainLight):
-            return ICON_RAIN_LIGHT;
+            return theme === THEME_LIGHT ? ICON_RAIN_LIGHT_DAY : ICON_RAIN_LIGHT_NIGHT;
         case checkCodeList(code, codesRainHeavy):
-            return ICON_RAIN_HEAVY;
+            return theme === THEME_LIGHT ? ICON_RAIN_HEAVY_DAY : ICON_RAIN_HEAVY_NIGHT;
         case checkCodeList(code, codesSnowLight):
-            return ICON_SNOW_LIGHT;
+            return theme === THEME_LIGHT ? ICON_SNOW_LIGHT_DAY : ICON_SNOW_LIGHT_NIGHT;
         case checkCodeList(code, codesSnowHeavy):
-            return ICON_SNOW_HEAVY;
+            return theme === THEME_LIGHT ? ICON_SNOW_HEAVY_DAY : ICON_SNOW_HEAVY_NIGHT;
         case checkCodeList(code, codesSnowMixed):
             return ICON_SNOW_MIXED;
         case checkCodeList(code, codesTstorm):
             return ICON_TSTORM;
         case checkCodeList(code, codesCloudsHeavy):
-            return ICON_CLOUDS_HEAVY;
+            return theme === THEME_LIGHT ? ICON_CLOUDS_HEAVY_DAY : ICON_CLOUDS_HEAVY_NIGHT;
         case checkCodeList(code, codesCloudsLight):
-            if (theme === THEME_LIGHT) {
-                return ICON_CLOUDS_LIGHT_DAY;
-            } else {
-                return ICON_CLOUDS_LIGHT_NIGHT;
-            }
+            return theme === THEME_LIGHT ? ICON_CLOUDS_LIGHT_DAY : ICON_CLOUDS_LIGHT_NIGHT;
         case checkCodeList(code, codesClear):
-            if (theme === THEME_LIGHT) {
-                return ICON_CLEAR_DAY;
-            } else {
-                return ICON_CLEAR_NIGHT;
-            }
+            return theme === THEME_LIGHT ? ICON_CLEAR_DAY : ICON_CLEAR_NIGHT;
         case checkCodeList(code, codesAtmosphere):
             switch (code) {
                 case CODE_HAZE:
@@ -87,10 +86,10 @@ export const translateWeatherCode = (code = 800, theme = THEME_LIGHT) => {
                 case CODE_TORNADO:
                     return ICON_TORNADO;
                 default:
-                    return ICON_FOG;
+                    return theme === THEME_LIGHT ? ICON_FOG_DAY : ICON_FOG_NIGHT;
             }
         default:
-            return ICON_CLOUDS_HEAVY;
+            return ICON_CLOUDS_HEAVY_DAY;
     }
 }
 
