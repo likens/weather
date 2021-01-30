@@ -27,6 +27,7 @@ const Button = styled.button`
 const Modal = styled.div`
 	${blurBlock}
 	background: rgba(0,0,0,.5);
+	backdrop-filter: blur(.5rem);
 	width: calc(100% - 4rem);
 	top: 25%;
 	left: 50%;
