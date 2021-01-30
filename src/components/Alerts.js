@@ -10,7 +10,7 @@ const Container = styled.div`
 `
 
 const Button = styled.button`
-	background: rgba(0,0,0,.3);
+	background: rgba(0,0,0,.4);
 	border-radius: .5rem;
 	border: 0;
 	outline: 0;
