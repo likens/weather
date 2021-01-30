@@ -13,7 +13,6 @@ const OPEN_WEATHER_GEOCODING_PATH = "/geo/1.0/reverse";
 const OPEN_WEATHER_API_KEY = "?appid=6aff0b217cdefa11d1254c77ccb78fbf";
 
 const resetState = {
-	isLoading: false,
 	weather: null,
 	geo: null,
 	time: null,
@@ -21,14 +20,14 @@ const resetState = {
 	theme: null
 };
 
-const Refresh = styled.div`
-	position: fixed;
-	height: 100%;
-	left: 0;
-	top: 0;
-	width: 100%;
-	z-index: 3000;
-`
+// const Refresh = styled.div`
+// 	position: fixed;
+// 	height: 100%;
+// 	left: 0;
+// 	top: 0;
+// 	width: 100%;
+// 	z-index: 3000;
+// `
 
 const Master = styled.div`
 	display: flex;
@@ -134,6 +133,7 @@ export default class App extends React.Component {
 						term: translateWeatherCode(json.current.weather[0].id, theme),
 						time: time
 					},
+					alerts: json.alerts,
 					daily: json.daily,
 					hourly: json.hourly
 				}
@@ -166,8 +166,9 @@ export default class App extends React.Component {
 							desc={this.state.weather.desc}
 							geo={this.state.geo} 
 							daily={this.state.weather.daily}
-							hourly={this.state.weather.hourly} />
-						<Refresh onClick={() => this.getPosition()}></Refresh>
+							hourly={this.state.weather.hourly}
+							alerts={this.state.weather.alerts} />
+						{/* <Refresh onClick={() => this.getPosition()}></Refresh> */}
 					</Fragment> : 
 					<Loader>
 						<TailSpin width={120} height={120} stroke={COLOR_WHITE} />

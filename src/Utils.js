@@ -41,7 +41,10 @@ export const ICON_SUNSET = "sunset";
 export const CODE_HAZE = 721;
 export const CODE_FOG = 741;
 export const CODE_WIND = 771;
-export const CODE_TORNADO = 781; 
+export const CODE_TORNADO = 781;
+
+export const TERM_SUNRISE = "Sunrise";
+export const TERM_SUNSET = "Sunset";
 
 export const degToCompass = (deg = 0) => {
     const val = Math.floor((deg / 22.5) + 0.5);
@@ -98,6 +101,10 @@ function checkCodeList(code, codeList) {
         return code;
     }
     return false;
+}
+
+export const formatDateTime = (dt) => {
+    return new window.Date(dt * 1000).toLocaleString('en-us', {month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
 }
 
 export const codesTstorm = [200, 201, 202, 210, 211, 212, 221, 230, 231, 232];

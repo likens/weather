@@ -33,8 +33,13 @@ body {
     line-height: 1.35;
     color: var(--white);
     background: var(--charcoal);
+    text-shadow: 0 0 .3rem rgba(0,0,0, .5);
     margin: 0;
     padding: 0;
+}
+
+.modal-active {
+    overflow: hidden;
 }
 
 .root {
@@ -43,4 +48,24 @@ body {
     width: 100%;
     align-items: center;
     justify-content: center;
+}
+
+@keyframes modalBox {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 0%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%, -25%);
+    }
+}
+
+@keyframes modalOverlay {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

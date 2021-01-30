@@ -29,7 +29,7 @@ const Background = styled.div`
     z-index: 1000;
 `  
 
-const Weather = ({ temps, times, precip, misc, desc, geo, theme, daily, hourly }) => {
+const Weather = ({ temps, times, precip, misc, desc, geo, theme, daily, hourly, alerts }) => {
 
     return (
         <Fragment>
@@ -41,7 +41,8 @@ const Weather = ({ temps, times, precip, misc, desc, geo, theme, daily, hourly }
                     times={times} 
                     temps={temps}
                     precip={precip}
-                    misc={misc} />
+                    misc={misc}
+                    alerts={alerts} />
                 <Forecast 
                     daily={daily}
                     hourly={hourly} />

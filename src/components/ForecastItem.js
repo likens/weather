@@ -5,7 +5,7 @@ import { DEGREE_SYMBOL, PERCENT_SYMBOL, translateWeatherCode, ICON_TEMP, ICON_PR
 
 const Item = styled.div`
 	display: grid;
-	grid-template-columns: 4rem 4rem 10rem;
+	grid-template-columns: 4rem 4rem min-content;
 	grid-gap: 2rem;
 	align-items: center;
 	position: relative;

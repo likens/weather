@@ -1,15 +1,18 @@
 import React from "react";
 import styled from "styled-components"
 import WeatherIcon from "./WeatherIcon";
-import { DEGREE_SYMBOL, PERCENT_SYMBOL, degToCompass, ICON_TEMP, ICON_PRECIP, ICON_WIND, ICON_HUMID, ICON_SUNSET, blurBlock, THEME_DARK } from "../Utils";
+import Alerts from "./Alerts";
+import { DEGREE_SYMBOL, PERCENT_SYMBOL, degToCompass, ICON_TEMP, ICON_PRECIP, ICON_WIND, ICON_HUMID, ICON_SUNSET, blurBlock, THEME_DARK, TERM_SUNSET, TERM_SUNRISE} from "../Utils";
 
 const Container = styled.div`
 	${blurBlock}
+	grid-gap: 1rem;
 `
 const Temperatures = styled.div`
 	display: flex;
 	align-items:center;
 	justify-content: center;
+	padding: 0 0 1rem;
 	flex-wrap: wrap;
 	text-align: center;
 	line-height: 1;
@@ -19,7 +22,7 @@ const Temperatures = styled.div`
 `
 const Actual = styled.div`
 	font-weight: 700;
-	font-size: 5.2rem;
+	font-size: 4.5rem;
 	margin: 0 4rem;
 	position: relative;
 	color: var(--white);
@@ -49,14 +52,12 @@ const Location = styled.div`
 	text-transform:uppercase;
 	font-weight: 700;
 	font-size: 2.4rem;
-	padding:0 0 1rem;
 	width: 100%;
 `
 
 const Tagline = styled.div`
 	font-size: 2rem;
 	color: var(--grayed);
-	padding: 0 0 1rem;
 `
 
 const Intro = styled.div`
@@ -65,6 +66,8 @@ const Intro = styled.div`
 	letter-spacing: 1px;
 	line-height: 1;
 	width: 100%;
+	display: grid;
+	grid-gap: 1rem;
 `
 const Label = styled.div`
 	font-size: 1.2rem;
@@ -79,13 +82,14 @@ const Value = styled.div`
 `
 
 const Data = styled.div`
-	padding:1.5rem 0 0;
+	display: grid;
+	grid-gap: .5rem;
 `;
+
 const Point = styled.div`
 	display: flex;
 	align-items:center;
 	justify-content: center;
-	padding: .5rem 0 0;
 	letter-spacing: 1px;
 	font-size: 1.6rem;
 	width: 100%;
@@ -101,27 +105,28 @@ const Image = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 1rem 0;
 `
 
-const Current = ({ desc, temps, geo, precip, misc, theme, times }) => {
+const DateTime = styled.div`
+	font-size: 1.2rem;
+	color: var(--grayed);
+`
+
+const Current = ({ desc, temps, geo, precip, misc, theme, times, alerts }) => {
 
 	const date = new window.Date(desc.time * 1000).toLocaleString('en-us');
-	const sunset = new window.Date((theme === THEME_DARK ? times.sunrise : times.sunset) * 1000).toLocaleTimeString('en-us');
+	const sunset = new window.Date((theme === THEME_DARK ? times.sunrise : times.sunset) * 1000).toLocaleTimeString('en-us', { hour: '2-digit', minute: '2-digit'});
 
-
-	const name = // geo[1] ? geo[1].name : 
-		geo[0].name;
-	const state = // geo[1] ? geo[1].state : 
-		geo[0].state;
-	const country = // geo[1] ? geo[1].country : 
-		geo[0].country;
+	const name = geo[0].name;
+	const state = geo[0].state;
+	const country = geo[0].country;
 
     return (
 
 		<Container>
 
 			<Intro>
+				<DateTime>{date}</DateTime>
 				<Location>{name}{`${state ? `, ${state}` : `${country}`}`}</Location>
 				<Tagline>{desc.tagline}</Tagline>
 			</Intro>
@@ -135,6 +140,8 @@ const Current = ({ desc, temps, geo, precip, misc, theme, times }) => {
 				<Actual>{Math.round(temps.current)}{DEGREE_SYMBOL}</Actual>
 				<Temp>{Math.round(temps.high)}{DEGREE_SYMBOL}</Temp>
 			</Temperatures>
+
+			{alerts.length ? <Alerts alerts={alerts}></Alerts> : ``}
 
 			<Data>
 				<Point>
@@ -169,11 +176,8 @@ const Current = ({ desc, temps, geo, precip, misc, theme, times }) => {
 					<Icon>
 						<WeatherIcon icon={ICON_SUNSET} size={1} />
 					</Icon>
-					<Label>{theme === THEME_DARK ? `Sunrise` : `Sunset`}</Label>
+					<Label>{theme === THEME_DARK ? TERM_SUNRISE : TERM_SUNSET}</Label>
 					<Value>{sunset}</Value>
-				</Point>
-				<Point>
-					<Label>{date}</Label>
 				</Point>
 			</Data>
 
