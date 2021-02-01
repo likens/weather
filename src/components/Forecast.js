@@ -46,7 +46,7 @@ const ToggleList = styled.div`
 		top: 0;
 		left: 0;
 		width: 50%;
-		background: rgba(0,0,0,.4);
+		background: rgba(0,0,0,.5);
 		border-radius: .5rem;
 		content: '';
 		height: 100%;

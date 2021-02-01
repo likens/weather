@@ -120,7 +120,7 @@ export const codesCloudsHeavy = [803, 804];
 
 export const blurBlock = `
 	background: rgba(0, 0, 0, .5);
-	/** backdrop-filter: blur(1rem); */
+	backdrop-filter: blur(.5rem);
 	border-radius: 1rem;
 	padding: 2rem;
 	display: grid;
