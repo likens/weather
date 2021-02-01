@@ -141,7 +141,7 @@ const Current = ({ desc, temps, geo, precip, misc, theme, times, alerts }) => {
 				<Temp>{Math.round(temps.high)}{DEGREE_SYMBOL}</Temp>
 			</Temperatures>
 
-			{alerts.length ? <Alerts alerts={alerts}></Alerts> : ``}
+			{alerts?.length ? <Alerts alerts={alerts} /> : ``}
 
 			<Data>
 				<Point>
