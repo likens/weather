@@ -6,6 +6,7 @@ import Forecast from "./Forecast";
 const Container = styled.div`
     display: grid;
     align-items: center;
+	align-content: flex-start;
     justify-content: center;
     grid-gap: 2rem;
     grid-template-columns: 1fr;

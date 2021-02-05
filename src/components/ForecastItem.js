@@ -85,7 +85,7 @@ const PoP = styled.div`
 	}
 `
 
-const ForecastItem = ({ item }) => {
+const ForecastItem = ({ item, theme }) => {
 
 	const isDay = item.temp.min && item.temp.max ? true : false;
 
@@ -116,7 +116,7 @@ const ForecastItem = ({ item }) => {
 				</Date>
 
 				<Icon>
-					<WeatherIcon icon={translateWeatherCode(item.weather[0].id)} />
+					<WeatherIcon icon={translateWeatherCode(item.weather[0].id, theme)} />
 					<Description>{item.weather[0].main}</Description>
 				</Icon>
 

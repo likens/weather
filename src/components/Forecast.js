@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components"
 import ForecastItem from "./ForecastItem";
-import { blurBlock } from "../Utils";
+import { blurBlock, THEME_LIGHT, THEME_DARK } from "../Utils";
 
 
 const Container = styled.div`
@@ -94,6 +94,11 @@ class Forecast extends Component {
 		this.showForecastList(true, this.dailyEl);
 	}
 
+	findDayTheme(dt) {
+		const day = this.props.daily[this.props.daily.findIndex(d => d.sunrise > dt)-1];
+		return dt > day.sunrise && dt < day.sunset ? THEME_LIGHT : THEME_DARK;
+	}
+
 	render() {
 		return (
 			<Container>
@@ -103,10 +108,10 @@ class Forecast extends Component {
 				</ToggleList>
 				<ForecastContainer height={this.state.height}>
 					<ForecastList active={this.state.showDaily} ref={this.dailyEl}>
-						{this.props.daily.map((day, i) => <ForecastItem key={i} item={day} />)}
+						{this.props.daily.map((day, i) => i > 0 ? <ForecastItem key={i} item={day} /> : ``)}
 					</ForecastList>
 					<ForecastList active={!this.state.showDaily} ref={this.hourlyEl}>
-						{this.props.hourly.map((hour, i) => i < 24 ? <ForecastItem key={i} item={hour} /> : ``)}
+						{this.props.hourly.map((hour, i) => i < 24 ? <ForecastItem key={i} item={hour} theme={this.findDayTheme(hour.dt)} /> : ``)}
 					</ForecastList>
 				</ForecastContainer>
 			</Container>
