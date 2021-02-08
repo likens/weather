@@ -96,7 +96,7 @@ class Forecast extends Component {
 
 	findDayTheme(dt) {
 		const day = this.props.daily[this.props.daily.findIndex(d => d.sunrise > dt)-1];
-		return dt > day.sunrise && dt < day.sunset ? THEME_LIGHT : THEME_DARK;
+		return dt > day?.sunrise && dt < day?.sunset ? THEME_LIGHT : THEME_DARK;
 	}
 
 	render() {
