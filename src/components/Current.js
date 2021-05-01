@@ -56,9 +56,16 @@ const Location = styled.div`
 `
 
 const Tagline = styled.div`
-	font-size: 2rem;
-	color: var(--grayed);
+	text-transform:uppercase;
+	font-weight: 700;
+	font-size: 2.4rem;
+	width: 100%;
 `
+
+// const Tagline = styled.div`
+// 	font-size: 2rem;
+// 	color: var(--grayed);
+// `
 
 const Intro = styled.div`
 	text-align:center;

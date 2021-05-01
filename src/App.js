@@ -10,7 +10,8 @@ const FORT_WAYNE_COORDS_LNG = "-85.1394";
 const OPEN_WEATHER_URL = "https://api.openweathermap.org";
 const OPEN_WEATHER_WEATHER_PATH = "/data/2.5/onecall";
 const OPEN_WEATHER_GEOCODING_PATH = "/geo/1.0/reverse";
-const OPEN_WEATHER_API_KEY = "?appid=6aff0b217cdefa11d1254c77ccb78fbf";
+const OPEN_WEATHER_PARAMS_START = "?appid="
+const OPEN_WEATHER_API_KEY = process.env.OPEN_WEATHER_API_KEY;
 
 const resetState = {
 	weather: null,
@@ -87,10 +88,10 @@ export default class App extends React.Component {
 			`&lat=${lat}&lon=${lng}`;
 		
 		const weatherUrl = 
-			`${OPEN_WEATHER_URL}${OPEN_WEATHER_WEATHER_PATH}${OPEN_WEATHER_API_KEY}${latLonParams}&units=imperial&exclude=minutely`;
+			`${OPEN_WEATHER_URL}${OPEN_WEATHER_WEATHER_PATH}${OPEN_WEATHER_PARAMS_START}${OPEN_WEATHER_API_KEY}${latLonParams}&units=imperial&exclude=minutely`;
 
 		const geoUrl =
-			`${OPEN_WEATHER_URL}${OPEN_WEATHER_GEOCODING_PATH}${OPEN_WEATHER_API_KEY}${latLonParams}&limit=5`;
+			`${OPEN_WEATHER_URL}${OPEN_WEATHER_GEOCODING_PATH}${OPEN_WEATHER_PARAMS_START}${OPEN_WEATHER_API_KEY}${latLonParams}&limit=5`;
 
 		fetch(weatherUrl).then(res => res.json()).then(json => {
 

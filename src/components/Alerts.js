@@ -28,13 +28,14 @@ const Modal = styled.div`
 	${blurBlock}
 	background: rgba(0,0,0,.5);
 	backdrop-filter: blur(.5rem);
-	width: calc(100% - 4rem);
-	top: 25%;
+	width: calc(100% - 8rem);
+	top: 20%;
 	left: 50%;
-	transform: translate(-50%, -25%);
+	transform: translate(-50%, -20%);
 	position: absolute;
 	z-index: 4000;
 	max-height: 75vh;
+	max-width: 60rem;
 	height: min-content;
 	align-content: flex-start;
 	animation: modalBox .5s;

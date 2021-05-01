@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import styled from "styled-components"
 import Current from "./Current";
 import Forecast from "./Forecast";
+// import Search from "./Search";
 
 const Container = styled.div`
     display: grid;
@@ -35,6 +36,7 @@ const Weather = ({ temps, times, precip, misc, desc, geo, theme, daily, hourly, 
     return (
         <Fragment>
             <Container>
+                {/* <Search geo={geo} /> */}
                 <Current 
                     geo={geo}
                     desc={desc}
