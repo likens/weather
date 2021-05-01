@@ -60,16 +60,16 @@ export default class App extends React.Component {
 
 	componentDidMount() {
 		this.getPosition();
-		if ( "AmbientLightSensor" in window ) {
-			const sensor = new window.AmbientLightSensor();
-			sensor.onreading = () => {
-			  console.log("Current light level:", sensor.illuminance);
-			};
-			sensor.onerror = (event) => {
-			  console.log(event.error.name, event.error.message);
-			};
-			sensor.start();
-		  }
+		// if ( "AmbientLightSensor" in window ) {
+		// 	const sensor = new window.AmbientLightSensor();
+		// 	sensor.onreading = () => {
+		// 	  console.log("Current light level:", sensor.illuminance);
+		// 	};
+		// 	sensor.onerror = (event) => {
+		// 	  console.log(event.error.name, event.error.message);
+		// 	};
+		// 	sensor.start();
+		//   }
 	}
 
 	getPosition() {
@@ -146,8 +146,6 @@ export default class App extends React.Component {
 	}
 
 	render() {
-
-		console.log(OPEN_WEATHER_API_KEY);
 
 		let weather, geo = null;
 
