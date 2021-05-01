@@ -11,7 +11,7 @@ const OPEN_WEATHER_URL = "https://api.openweathermap.org";
 const OPEN_WEATHER_WEATHER_PATH = "/data/2.5/onecall";
 const OPEN_WEATHER_GEOCODING_PATH = "/geo/1.0/reverse";
 const OPEN_WEATHER_PARAMS_START = "?appid="
-const OPEN_WEATHER_API_KEY = process.env.OPEN_WEATHER_API_KEY;
+const OPEN_WEATHER_API_KEY = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
 
 const resetState = {
 	weather: null,
@@ -146,6 +146,8 @@ export default class App extends React.Component {
 	}
 
 	render() {
+
+		console.log(OPEN_WEATHER_API_KEY);
 
 		let weather, geo = null;
 
