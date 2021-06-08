@@ -21,15 +21,6 @@ const resetState = {
 	theme: null
 };
 
-// const Refresh = styled.div`
-// 	position: fixed;
-// 	height: 100%;
-// 	left: 0;
-// 	top: 0;
-// 	width: 100%;
-// 	z-index: 3000;
-// `
-
 const Master = styled.div`
 	display: flex;
 	flex-wrap: wrap;
@@ -52,6 +43,17 @@ const Message = styled.div`
 	width: 100%;
 `
 
+const Refresh = styled.div`
+	position: absolute;
+	height: 46rem;
+	left: 50%;
+	top: 0;
+	width: 100%;
+	max-width: 50rem;
+	transform: translateX(-50%);
+	z-index: 3000;
+`
+
 export default class App extends React.Component {
 
 	state = {
@@ -59,41 +61,34 @@ export default class App extends React.Component {
 	};
 
 	componentDidMount() {
-		this.getPosition();
-		// if ( "AmbientLightSensor" in window ) {
-		// 	const sensor = new window.AmbientLightSensor();
-		// 	sensor.onreading = () => {
-		// 	  console.log("Current light level:", sensor.illuminance);
-		// 	};
-		// 	sensor.onerror = (event) => {
-		// 	  console.log(event.error.name, event.error.message);
-		// 	};
-		// 	sensor.start();
-		//   }
+		this.initApp();
 	}
 
-	getPosition() {
+	initApp() {
 		this.setState({
 			...resetState
-		})
+		});
+		const pos = { lat: FORT_WAYNE_COORDS_LAT, lng: FORT_WAYNE_COORDS_LNG }
 		navigator.geolocation.getCurrentPosition(
-			position => { this.fetchWeather(position.coords.latitude, position.coords.longitude) },
-			error => { this.fetchWeather(FORT_WAYNE_COORDS_LAT, FORT_WAYNE_COORDS_LNG) }
+			position => { 
+				pos.lat = position.coords.latitude;
+				pos.lng = position.coords.longitude;
+				this.getAndSetWeather(pos);
+				this.getAndSetGeo(pos);
+			},
+			error => { 
+				this.getAndSetWeather(pos);
+				this.getAndSetGeo(pos);
+			}
 		);
 	}
 
-	fetchWeather(lat, lng) {
-
-		const latLonParams =
-			`&lat=${lat}&lon=${lng}`;
+	getAndSetWeather(pos) {
 		
-		const weatherUrl = 
-			`${OPEN_WEATHER_URL}${OPEN_WEATHER_WEATHER_PATH}${OPEN_WEATHER_PARAMS_START}${OPEN_WEATHER_API_KEY}${latLonParams}&units=imperial&exclude=minutely`;
+		const url = 
+			`${OPEN_WEATHER_URL}${OPEN_WEATHER_WEATHER_PATH}${OPEN_WEATHER_PARAMS_START}${OPEN_WEATHER_API_KEY}&lat=${pos.lat}&lon=${pos.lng}&units=imperial&exclude=minutely`;
 
-		const geoUrl =
-			`${OPEN_WEATHER_URL}${OPEN_WEATHER_GEOCODING_PATH}${OPEN_WEATHER_PARAMS_START}${OPEN_WEATHER_API_KEY}${latLonParams}&limit=5`;
-
-		fetch(weatherUrl).then(res => res.json()).then(json => {
+		fetch(url).then(res => res.json()).then(json => {
 
 			const time = json.current.dt;
 			const sunrise = json.current.sunrise;
@@ -136,13 +131,28 @@ export default class App extends React.Component {
 					},
 					alerts: json.alerts,
 					daily: json.daily,
-					hourly: json.hourly
-				}
+					hourly: json.hourly,
+					url: url
+				},
 			})
 		});
 
-		fetch(geoUrl).then(res => res.json()).then(json => this.setState({geo: json}));
+	}
 
+	getAndSetGeo(pos) {
+
+		const url =
+			`${OPEN_WEATHER_URL}${OPEN_WEATHER_GEOCODING_PATH}${OPEN_WEATHER_PARAMS_START}${OPEN_WEATHER_API_KEY}&lat=${pos.lat}&lon=${pos.lng}&limit=5`;
+
+		fetch(url).then(res => res.json()).then(json => {
+			this.setState({
+				geo: {
+					locations: json,
+					url: url
+				}
+			})
+		});
+		
 	}
 
 	render() {
@@ -169,7 +179,7 @@ export default class App extends React.Component {
 							daily={this.state.weather.daily}
 							hourly={this.state.weather.hourly}
 							alerts={this.state.weather.alerts} />
-						{/* <Refresh onClick={() => this.getPosition()}></Refresh> */}
+						<Refresh onClick={() => this.initApp()}></Refresh>
 					</Fragment> : 
 					<Loader>
 						<TailSpin width={120} height={120} stroke={COLOR_WHITE} />

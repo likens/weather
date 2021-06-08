@@ -124,9 +124,9 @@ const Current = ({ desc, temps, geo, precip, misc, theme, times, alerts }) => {
 	const date = new window.Date(desc.time * 1000).toLocaleString('en-us');
 	const sunset = new window.Date((theme === THEME_DARK ? times.sunrise : times.sunset) * 1000).toLocaleTimeString('en-us', { hour: '2-digit', minute: '2-digit'});
 
-	const name = geo[0].name;
-	const state = geo[0].state;
-	const country = geo[0].country;
+	const name = geo.locations[0].name;
+	const state = geo.locations[0].state;
+	const country = geo.locations[0].country;
 
     return (
 
