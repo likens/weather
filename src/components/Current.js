@@ -2,10 +2,12 @@ import React from "react";
 import styled from "styled-components"
 import WeatherIcon from "./WeatherIcon";
 import Alerts from "./Alerts";
-import { DEGREE_SYMBOL, PERCENT_SYMBOL, degToCompass, ICON_TEMP, ICON_PRECIP, ICON_WIND, ICON_HUMID, ICON_SUNSET, blurBlock, THEME_DARK, TERM_SUNSET, TERM_SUNRISE} from "../Utils";
+import { DEGREE_SYMBOL, PERCENT_SYMBOL, degToCompass, ICON_TEMP, ICON_PRECIP, ICON_WIND, ICON_HUMID, ICON_SUNSET, blurBlock, fadeIn, THEME_DARK, TERM_SUNSET, TERM_SUNRISE} from "../Utils";
 
 const Container = styled.div`
 	${blurBlock}
+	animation-name: ${fadeIn};
+	animation-duration: 500ms;
 	grid-gap: 1rem;
 `
 const Temperatures = styled.div`

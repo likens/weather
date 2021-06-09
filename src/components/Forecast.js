@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components"
 import ForecastItem from "./ForecastItem";
-import { blurBlock, THEME_LIGHT, THEME_DARK } from "../Utils";
-
+import { blurBlock, fadeIn, THEME_LIGHT, THEME_DARK } from "../Utils";
 
 const Container = styled.div`
 	${blurBlock}
+	animation-name: ${fadeIn};
+	animation-duration: 500ms;
 	overflow: hidden;
 	grid-gap: 2rem;
 `
@@ -15,7 +16,7 @@ const ForecastList = styled.div`
 	align-content: flex-start;
 	align-self: flex-start;
 	grid-gap: 3rem;
-	max-width: 30rem;
+	width: 100%;
 	margin: 0 auto;
 	transition:all .5s ease;
 	position: absolute;
@@ -65,6 +66,7 @@ const ToggleButton = styled.button`
 	position:relative;
 	cursor: pointer;
 	font-size: 1.4rem;
+	border-radius: .5rem;
 	background: 0;
 	border: 0;
 	outline: 0; 
@@ -108,10 +110,10 @@ class Forecast extends Component {
 				</ToggleList>
 				<ForecastContainer height={this.state.height}>
 					<ForecastList active={this.state.showDaily} ref={this.dailyEl}>
-						{this.props.daily.map((day, i) => i > 0 ? <ForecastItem key={i} item={day} /> : ``)}
+						{this.props.daily.map((day, i) => i > 0 ? <ForecastItem key={i} index={i} item={day} /> : ``)}
 					</ForecastList>
 					<ForecastList active={!this.state.showDaily} ref={this.hourlyEl}>
-						{this.props.hourly.map((hour, i) => i < 24 ? <ForecastItem key={i} item={hour} theme={this.findDayTheme(hour.dt)} /> : ``)}
+						{this.props.hourly.map((hour, i) => i < 24 ? <ForecastItem key={i} index={i} item={hour} theme={this.findDayTheme(hour.dt)} /> : ``)}
 					</ForecastList>
 				</ForecastContainer>
 			</Container>

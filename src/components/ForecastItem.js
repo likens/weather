@@ -9,15 +9,17 @@ const Item = styled.div`
 	grid-gap: 2rem;
 	align-items: center;
 	position: relative;
-	&:not(:last-child):after {
+	max-width: 30rem;
+	margin: 0 auto;
+	&:not(:first-child):before {
 		content: '';
 		width: 75%;
 		background: linear-gradient(90deg, transparent 0, var(--grayed) 50%, transparent);
 		position: absolute;
-		bottom: 0;
+		top: 0;
 		left: 50%;
 		height: 1px;
-		transform: translate(-50%, 1.5rem);
+		transform: translate(-50%, -1.5rem);
 	}
 `
 
@@ -35,6 +37,25 @@ const DateMain = styled.div`
 	font-size: 1.8rem;
 	span {
 		font-size: 1.2rem;
+	}
+`
+
+const Tomorrow = styled.div`
+	border-radius: .5rem;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 700;
+	letter-spacing: .3rem;
+	padding: .75rem;
+	font-size: 1.4rem;
+	background: rgba(0,0,0,.5);
+	grid-column: 1 / -1;
+	margin-top: -1.5rem;
+	+ div {
+		margin-top: -1.5rem;
+		&:before {
+			display: none;
+		}
 	}
 `
 const Icon = styled.div`
@@ -85,7 +106,7 @@ const PoP = styled.div`
 	}
 `
 
-const ForecastItem = ({ item, theme }) => {
+const ForecastItem = ({ item, theme, index }) => {
 
 	const isDay = item.temp.min && item.temp.max ? true : false;
 
@@ -94,12 +115,15 @@ const ForecastItem = ({ item, theme }) => {
 	const dateOfMonth = date.getDate();
 	const dateHours = date.getHours();
 
+	const tomorrowFlag = !isDay && !dateHours && index;
+
 	const temp = isDay ? item.temp : Math.round(item.temp);
 	const tempMin = Math.round(temp?.min);
 	const tempMax = Math.round(temp?.max); 
 
     return (
 		<Fragment>
+			{tomorrowFlag ? <Tomorrow>Tomorrow</Tomorrow> : ``}
 			<Item>
 				<Date>
 					{isDay ? 

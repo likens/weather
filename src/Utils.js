@@ -1,3 +1,4 @@
+import { keyframes } from "styled-components"
 
 export const COLOR_CHARCOAL = "#242424";
 export const COLOR_WHITE = "#fff";
@@ -128,4 +129,9 @@ export const blurBlock = `
 	width:100%;
 	max-width: 50rem;
 	margin:0 auto;
+`
+
+export const fadeIn = keyframes`
+	0% { opacity: 0; transform: translateY(5rem); }
+	100% { opacity: 1; transform: translateY(0rem); }
 `

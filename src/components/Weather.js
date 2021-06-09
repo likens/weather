@@ -29,7 +29,7 @@ const Background = styled.div`
     width: 100vw;
     height: 100vh;
     z-index: 1000;
-`  
+`
 
 const Weather = ({ temps, times, precip, misc, desc, geo, theme, daily, hourly, alerts }) => {
 
