@@ -45,9 +45,9 @@ const Message = styled.div`
 
 const Refresh = styled.div`
 	position: absolute;
-	height: 46rem;
+	height: 20rem;
 	left: 50%;
-	top: 0;
+	top: 2rem;
 	width: 100%;
 	max-width: 50rem;
 	transform: translateX(-50%);
