@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import styled from "styled-components"
 import Current from "./Current";
 import Forecast from "./Forecast";
+import { getBackgroundImage, fade } from "../Utils";
 // import Search from "./Search";
 
 const Container = styled.div`
@@ -20,6 +21,8 @@ const Container = styled.div`
     z-index: 2000;
 `
 const Background = styled.div`
+    animation-name: ${fade};
+    animation-duration: 500ms;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -50,7 +53,9 @@ const Weather = ({ temps, times, precip, misc, desc, geo, theme, daily, hourly, 
                     daily={daily}
                     hourly={hourly} />
             </Container>
-            <Background theme={theme} style={{backgroundImage: `url(/bg/${desc.term}.jpg)`}} />
+            <Background 
+                theme={theme} 
+                style={{backgroundImage: `url(${getBackgroundImage(desc.term)})`}} />
         </Fragment>
     )
 }

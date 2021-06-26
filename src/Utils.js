@@ -108,6 +108,10 @@ export const formatDateTime = (dt) => {
     return new window.Date(dt * 1000).toLocaleString('en-us', {month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
 }
 
+export const getBackgroundImage = (src) => {
+    return `/bg/${src}.jpg`;
+}
+
 export const codesTstorm = [200, 201, 202, 210, 211, 212, 221, 230, 231, 232];
 export const codesRainLight = [300, 301, 310, 321, 500, 501];
 export const codesRainHeavy = [302, 311, 312, 313, 314, 502, 503, 504, 520, 521, 522, 531];
@@ -131,7 +135,12 @@ export const blurBlock = `
 	margin:0 auto;
 `
 
+export const fade = keyframes`
+    from { opacity: 0; }
+    to { opacity: 1; }
+`
+
 export const fadeIn = keyframes`
-	0% { opacity: 0; transform: translateY(5rem); }
-	100% { opacity: 1; transform: translateY(0rem); }
+	from { opacity: 0; transform: translateY(5rem); }
+	to { opacity: 1; transform: translateY(0rem); }
 `

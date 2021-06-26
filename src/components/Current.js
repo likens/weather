@@ -8,6 +8,9 @@ const Container = styled.div`
 	${blurBlock}
 	animation-name: ${fadeIn};
 	animation-duration: 500ms;
+	animation-delay: 250ms;
+	animation-fill-mode: forwards;
+	opacity: 0;
 	grid-gap: 1rem;
 `
 const Temperatures = styled.div`

@@ -2,7 +2,7 @@ import React, {Fragment} from "react";
 import styled from "styled-components";
 import { TailSpin } from "svg-loaders-react";
 import Weather from "./components/Weather";
-import { THEME_LIGHT, THEME_DARK, COLOR_WHITE, translateWeatherCode } from "./Utils"
+import { THEME_LIGHT, THEME_DARK, COLOR_WHITE, translateWeatherCode, getBackgroundImage } from "./Utils";
 
 const FORT_WAYNE_COORDS_LAT = "41.0793";
 const FORT_WAYNE_COORDS_LNG = "-85.1394";
@@ -68,7 +68,8 @@ export default class App extends React.Component {
 		this.setState({
 			...resetState
 		});
-		const pos = { lat: FORT_WAYNE_COORDS_LAT, lng: FORT_WAYNE_COORDS_LNG }
+		const pos = { lat: FORT_WAYNE_COORDS_LAT, lng: FORT_WAYNE_COORDS_LNG };
+		const opts = { maximumAge: 0, timeout: 5000 };
 		navigator.geolocation.getCurrentPosition(
 			position => { 
 				pos.lat = position.coords.latitude;
@@ -79,7 +80,8 @@ export default class App extends React.Component {
 			error => { 
 				this.getAndSetWeather(pos);
 				this.getAndSetGeo(pos);
-			}
+			}, 
+			opts
 		);
 	}
 
@@ -157,16 +159,18 @@ export default class App extends React.Component {
 
 	render() {
 
-		let weather, geo = null;
+		let weather, geo, img = undefined;
 
 		if (this.state.weather && this.state.geo) {
 			weather = this.state.weather;
 			geo = this.state.geo;
+			fetch(getBackgroundImage(weather.desc.term))
+			.then(img = getBackgroundImage(weather.desc.term));
 		}
 
 		return (
 			<Master>
-				{ weather && geo ? 
+				{ weather && geo && img ? 
 					<Fragment>
 						<Weather 
 							theme={this.state.theme}
@@ -181,7 +185,7 @@ export default class App extends React.Component {
 							alerts={this.state.weather.alerts} />
 						<Refresh onClick={() => this.initApp()}></Refresh>
 					</Fragment> : 
-					<Loader>
+					<Loader onClick={() => this.initApp()}>
 						<TailSpin width={120} height={120} stroke={COLOR_WHITE} />
 						<Message>Fetching local weather...</Message>
 					</Loader> }

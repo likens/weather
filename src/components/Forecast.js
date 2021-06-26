@@ -7,6 +7,9 @@ const Container = styled.div`
 	${blurBlock}
 	animation-name: ${fadeIn};
 	animation-duration: 500ms;
+	animation-delay: 500ms;
+	animation-fill-mode: forwards;
+	opacity: 0;
 	overflow: hidden;
 	grid-gap: 2rem;
 `
