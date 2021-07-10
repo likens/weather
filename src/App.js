@@ -57,14 +57,12 @@ const Refresh = styled.div`
 const Background = styled.img`
 	animation-name: ${fade};
 	animation-duration: 500ms;
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center;
 	position: fixed;
 	top: 0;
-	left: 0;
+	object-fit: cover;
 	width: 100vw;
 	height: 100vh;
+	display: block;
 	z-index: 1000;
 `
 
