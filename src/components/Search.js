@@ -9,9 +9,9 @@ const Container = styled.div`
 
 const Search = ({ geo }) => {
 
-	const name = geo[0].name;
-	const state = geo[0].state;
-	const country = geo[0].country;
+	const name = geo.locations[0].name;
+	const state = geo.locations[0].state;
+	const country = geo.locations[0].country;
 
     return (
 
