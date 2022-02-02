@@ -55,7 +55,7 @@ const ToggleList = styled.div`
 		content: '';
 		height: 100%;
 		transition: all .5s ease;
-		${props => props.daily ? "transform: translateX(0)" : "transform: translateX(100%)"}
+		${props => !props.daily ? "transform: translateX(0)" : "transform: translateX(100%)"}
 	}
 `
 
@@ -83,7 +83,7 @@ class Forecast extends Component {
 		this.dailyEl = React.createRef();
 		this.hourlyEl = React.createRef();
 		this.state = {
-			showDaily: true,
+			showDaily: false,
 			height: 0
 		}
 	}
@@ -96,7 +96,7 @@ class Forecast extends Component {
 	}
 
 	componentDidMount() {
-		this.showForecastList(true, this.dailyEl);
+		this.showForecastList(this.state.showDaily, this.hourlyEl);
 	}
 
 	findDayTheme(dt) {
@@ -108,15 +108,15 @@ class Forecast extends Component {
 		return (
 			<Container>
 				<ToggleList daily={this.state.showDaily}>
-					<ToggleButton onClick={() => this.showForecastList(true, this.dailyEl)}>Daily</ToggleButton>
 					<ToggleButton onClick={() => this.showForecastList(false, this.hourlyEl)}>Hourly</ToggleButton>
+					<ToggleButton onClick={() => this.showForecastList(true, this.dailyEl)}>Daily</ToggleButton>
 				</ToggleList>
 				<ForecastContainer height={this.state.height}>
-					<ForecastList active={this.state.showDaily} ref={this.dailyEl}>
-						{this.props.daily.map((day, i) => i > 0 ? <ForecastItem key={i} index={i} item={day} /> : ``)}
-					</ForecastList>
 					<ForecastList active={!this.state.showDaily} ref={this.hourlyEl}>
 						{this.props.hourly.map((hour, i) => i < 24 ? <ForecastItem key={i} index={i} item={hour} theme={this.findDayTheme(hour.dt)} /> : ``)}
+					</ForecastList>
+					<ForecastList active={this.state.showDaily} ref={this.dailyEl}>
+						{this.props.daily.map((day, i) => i > 0 ? <ForecastItem key={i} index={i} item={day} /> : ``)}
 					</ForecastList>
 				</ForecastContainer>
 			</Container>

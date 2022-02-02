@@ -95,8 +95,7 @@ const AlertDescription = styled.div`
 `;
 const AlertMisc = styled.div`
 	color: var(--grayed);
-	font-size: 1.3rem;
-	font-style: italic;
+	font-size: 1.4rem;
 `;
 
 const AlertTime = styled.div``;
@@ -121,11 +120,11 @@ const AlertsItem = ({ alert }) => {
 		<>
 			<AlertFull>
 				<AlertEvent>{alert.event}</AlertEvent>
-				<AlertDescription>{alert.description}</AlertDescription>
 				<AlertMisc>
 					<AlertTime>{formatDateTime(alert.start)} &ndash; {formatDateTime(alert.end)}</AlertTime>
 					{/* <AlertAuthor>{alert.sender_name}</AlertAuthor> */}
 				</AlertMisc>
+				<AlertDescription>{alert.description}</AlertDescription>
 			</AlertFull>
 		</>
 	);

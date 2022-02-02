@@ -57,6 +57,12 @@ const Tomorrow = styled.div`
 			display: none;
 		}
 	}
+	&:first-child {
+		display: none;
+		+ div {
+			margin-top: 0;
+		}
+	}
 `
 const Icon = styled.div`
 	display: flex;
