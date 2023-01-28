@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/css/ol.css" type="text/css">
+		<style>
+			.map {
+				height: 400px;
+				width: 100%;
+			}
+		</style>
+		<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.12.0/build/ol.js"></script>
+		<title>OpenLayers example</title>
+	</head>
+	<body>
+		<h2>My Map</h2>
+		<button type="button" onclick="getLocation()">Get Location</button>
+		<div id="map" class="map"></div>
+		<script type="text/javascript">
+		 	const latitude = 41.04;
+			const longitude = -85.02;
+			const zoom = 8;
+
+			getLocation();
+
+			function generateMap(url) {
+
+				const layerOsm = new ol.layer.Tile({
+					source: new ol.source.OSM()
+				})
+				const layerTemp = new ol.layer.Tile({
+					source: new ol.source.XYZ({
+						url: url
+					})
+				});
+
+				const map = new ol.Map({
+					target: 'map',
+					layers: [
+						layerOsm,
+						layerTemp
+					],
+					view: new ol.View({
+						center: ol.proj.fromLonLat([longitude, latitude]),
+						zoom: zoom
+					})
+				});
+			}
+
+
+			function getLocation() {
+				const opts = { maximumAge: 0, timeout: 5000 };
+				navigator.geolocation.getCurrentPosition(
+					position => {
+						console.log(position);
+						const lattile = lat2tile(position.coords.latitude, zoom);
+						const lontile = lon2tile(position.coords.longitude, zoom);
+						const url = `https://tile.openweathermap.org/map/temp_new/${zoom}/${lattile}/${lontile}.png?appid=1f44da7f8519275a13415d97738cdb24`;
+						console.log(lattile, lontile);
+						console.log(url);
+						generateMap(url);
+					},
+					error => console.log("error"), 
+					opts
+				);
+			}
+			function lon2tile(lon,zoom) { 
+				return (Math.floor((lon+180)/360*Math.pow(2,zoom))); 
+			}
+			
+			function lat2tile(lat,zoom)  { 
+				return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom))); 
+			}
+
+		</script>
+	</body>
+</html>
